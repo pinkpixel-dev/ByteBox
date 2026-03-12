@@ -24,12 +24,17 @@ on:
       tag:
         description: "Release tag to upload to (e.g. v2.4.0)"
         required: true
+      ref:
+        description: "Git ref to build from for manual runs (branch, tag, or SHA)"
+        required: false
+        default: "main"
 
 permissions:
   contents: write # needed to upload release assets
 
 env:
   RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
+  BUILD_REF: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.ref || github.ref }}
 
 jobs:
   # ── Windows installer (.exe) ────────────────────────────────────────────────
@@ -41,7 +46,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ env.RELEASE_TAG }}
+          ref: ${{ env.BUILD_REF }}
           fetch-depth: 0
 
       - name: Setup Node.js
