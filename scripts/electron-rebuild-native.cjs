@@ -7,9 +7,14 @@
  * modules when system Node and Electron ship different ABI versions.
  */
 
-const { execSync } = require("child_process");
+const { execFileSync } = require("child_process");
 const path = require("path");
 const fs = require("fs");
+
+function runBin(bin, args, options) {
+  const executable = process.platform === "win32" ? `${bin}.cmd` : bin;
+  execFileSync(executable, args, options);
+}
 
 /** @param {import("electron-builder").AfterPackContext} context */
 module.exports = async function afterPack(context) {
@@ -38,14 +43,16 @@ module.exports = async function afterPack(context) {
   console.log(`[afterPack] Rebuilding better-sqlite3 for Electron ${electronVersion}…`);
 
   // 1. Rebuild in the SOURCE directory (has binding.gyp + C++ source)
-  execSync(
+  runBin(
+    "npx",
     [
-      "npx node-gyp rebuild",
+      "node-gyp",
+      "rebuild",
       `--target=${electronVersion}`,
       "--arch=x64",
       "--dist-url=https://electronjs.org/headers",
       "--runtime=electron",
-    ].join(" "),
+    ],
     {
       cwd: srcBsqliteDir,
       stdio: "inherit",
@@ -58,12 +65,16 @@ module.exports = async function afterPack(context) {
   fs.copyFileSync(srcBinary, destBinary);
 
   // 3. Restore system-Node build so `npm run dev` still works after packaging
-  execSync("npm rebuild better-sqlite3 --no-progress", {
-    cwd: projectRoot,
-    stdio: "inherit",
-  });
+  if (process.env.CI !== "true") {
+    runBin("npm", ["rebuild", "better-sqlite3", "--no-progress"], {
+      cwd: projectRoot,
+      stdio: "inherit",
+    });
 
-  console.log("[afterPack] better-sqlite3 rebuilt for Electron and restored for dev ✓");
+    console.log("[afterPack] better-sqlite3 rebuilt for Electron and restored for dev ✓");
+  } else {
+    console.log("[afterPack] better-sqlite3 rebuilt for Electron ✓");
+  }
 
   // 4. Copy .prisma/client into the packaged app.
   //    electron-builder's glob skips hidden (dot) directories, so the generated

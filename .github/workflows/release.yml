@@ -28,27 +28,33 @@ on:
 permissions:
   contents: write # needed to upload release assets
 
+env:
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
+
 jobs:
   # ── Windows installer (.exe) ────────────────────────────────────────────────
   build-windows:
     name: Windows installer
     runs-on: windows-latest
 
-    # Use bash for all run steps — the npm scripts in package.json use
-    # Unix pipes (grep) that break under cmd.exe / PowerShell.
-    defaults:
-      run:
-        shell: bash
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
 
       - name: Install dependencies
         run: npm ci
@@ -77,13 +83,35 @@ jobs:
       - name: Package Windows installer
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CI: "true"
         run: npx electron-builder --win --publish never
 
+      - name: Verify installer output
+        shell: pwsh
+        run: |
+          $installers = Get-ChildItem -Path release -Filter '*Setup*.exe' -File
+          if ($installers.Count -eq 0) {
+            Write-Error 'No NSIS installer was generated under release/.'
+          }
+          $installers | ForEach-Object { Write-Host "Installer: $($_.FullName)" }
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: |
+            release/*Setup*.exe
+            release/*.blockmap
+          if-no-files-found: error
+
       - name: Upload to GitHub Release
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
-          files: release/**/*.exe
+          tag_name: ${{ env.RELEASE_TAG }}
+          files: |
+            release/*Setup*.exe
+            release/*.blockmap
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
