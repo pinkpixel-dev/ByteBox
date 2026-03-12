@@ -1,5 +1,6 @@
 {
   "name": "bytebox",
+  "private": true,
   "author": {
     "name": "Pink Pixel",
     "email": "admin@pinkpixel.dev",
