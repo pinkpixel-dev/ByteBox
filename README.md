@@ -110,14 +110,14 @@ docker compose logs -f       # follow logs
 
 ### 🖥️ **Desktop App (Electron)**
 
-Runs ByteBox as a native installed application. Currently available for **Linux**.
+Runs ByteBox as a native installed application. Pre-built Linux installers are hosted on Cloudflare R2, and Windows installers are published through GitHub releases.
 
 **Download pre-built installers from the [ByteBox website](https://bytebox.pro/electron-desktop/):**
 
 | Format                | Link                                                                                                   |
 | --------------------- | ------------------------------------------------------------------------------------------------------ |
-| AppImage (any distro) | [ByteBox-2.5.0.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.0.AppImage)   |
-| .deb (Debian/Ubuntu)  | [bytebox_2.5.0_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.0_amd64.deb) |
+| AppImage (any distro) | [ByteBox-2.5.1.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.1.AppImage)   |
+| .deb (Debian/Ubuntu)  | [bytebox_2.5.1_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.1_amd64.deb) |
 
 Or build from source:
 

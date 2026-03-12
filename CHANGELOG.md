@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.5.1] - 2026-03-12
+
+### 🪟 Windows Installer Release, Packaging Hardening & 2.5.x Rollup
+
+This release rolls the feature work from `2.5.0` forward into a fresh `2.5.1` installer release and focuses on getting desktop distribution into a stable, repeatable state. It includes the UI and data-layer improvements from the original `2.5.0` work alongside Windows packaging fixes, workflow hardening, and updated download references for the new release.
+
+#### Added
+
+- **First Windows NSIS installer release path** — ByteBox now produces a Windows `.exe` installer through GitHub Actions with multi-step verification and release upload support.
+- **Windows multi-resolution app icon** — Added `electron/assets/icons/icon.ico` with embedded `16/32/48/64/128/256` sizes so installer, desktop shortcut, Start menu, and taskbar icons render correctly.
+- **Manual release build ref support** — The release workflow now accepts a separate manual `ref` input so draft releases can build from `main`, a tag, or a SHA without requiring checkout to match the release tag name exactly.
+
+#### Changed
+
+- **Version bump to `2.5.1`** — Application metadata, lockfile metadata, changelog entries, and desktop download references now point to the new release version.
+- **Release workflow hardening** — Windows release automation now uses native runner shells, installs Python explicitly for `node-gyp`, validates installer output before upload, and stores the generated installer as a workflow artifact in addition to attaching it to the GitHub release.
+- **Release process updated for mutable drafts** — `2.5.1` is intended to be assembled as a draft release first so assets can be uploaded and checked before publishing.
+- **Desktop download references updated** — README and website Electron docs now point Linux download filenames from `2.5.0` to `2.5.1`.
+
+#### Fixed
+
+- **Windows CI `npm ci` failure** — Synced `package-lock.json` so the Windows installer workflow no longer fails immediately on dependency mismatches.
+- **Windows native rebuild failure (`spawnSync npx.cmd EINVAL`)** — The Electron `afterPack` hook now invokes `node-gyp` directly through Node instead of shelling through `npx`, which fixes the Windows rebuild path for `better-sqlite3`.
+- **Missing Windows installer icon resource** — NSIS packaging no longer fails looking for `electron/assets/icons/icon.ico`; the expected icon file now exists in the repo and is bundled correctly.
+- **Manual release/tag coupling issue** — Workflow-dispatch builds no longer assume the release tag is also the ref to check out, which avoids mismatches when preparing a draft release before the final tag flow is settled.
+- **Windows installer workflow visibility** — The workflow now surfaces a concrete failure earlier if no installer file is produced, making debugging much clearer.
+
+#### Included from `2.5.0`
+
+- **Column drag-and-drop** with persisted category ordering
+- **Card reorder consistency fixes** and optimistic drag/drop updates
+- **Expanded personalization settings** including resizable sidebar/columns and typography controls
+- **Electron packaging fixes** for Turbopack alias packages, Prisma client bundling, and `better-sqlite3` Electron ABI handling
+- **Desktop packaging documentation updates** and refreshed release/download guidance
+
 ## [2.5.0] - 2026-03-04
 
 ### 🎯 Category Ordering, Drag-and-Drop, Neon Glow UI & Electron Packaging Fix

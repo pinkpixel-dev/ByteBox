@@ -5,6 +5,16 @@ description: Major ByteBox milestones and what changed.
 
 For complete historical detail, see root `CHANGELOG.md`. This page captures major platform milestones.
 
+## `2.5.1` (March 12, 2026)
+
+- Rolls the `2.5.0` feature work into a fresh installer-focused release
+- Windows NSIS installer pipeline is now working end-to-end through GitHub Actions
+- Release workflow hardened for manual draft releases with a separate build ref input
+- Windows native-module rebuild no longer shells through `npx`, fixing the `spawnSync npx.cmd EINVAL` failure
+- Added a proper multi-size Windows `.ico` for installer, Start menu, taskbar, and desktop shortcut rendering
+- Synced the package lockfile so Windows `npm ci` succeeds in CI
+- Desktop download references updated to `2.5.1`
+
 ## `2.5.0` (March 3, 2026)
 
 - Category column drag-and-drop reordering — grab the `⠿` handle and drag columns into any order

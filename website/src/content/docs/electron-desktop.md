@@ -52,8 +52,8 @@ Pre-built installers are hosted on Cloudflare R2:
 
 | Format                | Link                                                                                                   |
 | --------------------- | ------------------------------------------------------------------------------------------------------ |
-| AppImage (any distro) | [ByteBox-2.5.0.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.0.AppImage)   |
-| .deb (Debian/Ubuntu)  | [bytebox_2.5.0_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.0_amd64.deb) |
+| AppImage (any distro) | [ByteBox-2.5.1.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.1.AppImage)   |
+| .deb (Debian/Ubuntu)  | [bytebox_2.5.1_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.1_amd64.deb) |
 
 ## Notes
 

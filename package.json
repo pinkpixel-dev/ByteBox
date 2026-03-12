@@ -1,13 +1,12 @@
 {
   "name": "bytebox",
-  "private": true,
   "author": {
     "name": "Pink Pixel",
-    "email": "admino@pinkpixel.dev",
+    "email": "admin@pinkpixel.dev",
     "url": "https://pinkpixel.dev"
   },
   "description": "A dashboard app for developers",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "type": "module",
   "main": "dist-electron/main.cjs",
   "include": [
