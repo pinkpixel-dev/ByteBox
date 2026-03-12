@@ -12,6 +12,12 @@ const path = require("path");
 const fs = require("fs");
 
 function runBin(bin, args, options) {
+  if (bin === "node-gyp") {
+    const nodeGypCli = require.resolve("node-gyp/bin/node-gyp.js");
+    execFileSync(process.execPath, [nodeGypCli, ...args], options);
+    return;
+  }
+
   const executable = process.platform === "win32" ? `${bin}.cmd` : bin;
   execFileSync(executable, args, options);
 }
@@ -44,9 +50,8 @@ module.exports = async function afterPack(context) {
 
   // 1. Rebuild in the SOURCE directory (has binding.gyp + C++ source)
   runBin(
-    "npx",
+    "node-gyp",
     [
-      "node-gyp",
       "rebuild",
       `--target=${electronVersion}`,
       "--arch=x64",
