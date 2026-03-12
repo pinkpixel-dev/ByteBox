@@ -44,16 +44,18 @@ Packaged app DB lives in OS user data path and survives upgrades.
 Examples:
 
 - Linux: `~/.config/ByteBox/bytebox.db`
-- Windows: `%APPDATA%\\ByteBox\\bytebox.db`
+- Windows: `%APPDATA%\ByteBox\bytebox.db`
+- macOS: `~/Library/Application Support/ByteBox/bytebox.db`
 
 ## Download
 
 Pre-built installers are hosted on Cloudflare R2:
 
-| Format                | Link                                                                                                   |
-| --------------------- | ------------------------------------------------------------------------------------------------------ |
-| AppImage (any distro) | [ByteBox-2.5.1.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.1.AppImage)   |
-| .deb (Debian/Ubuntu)  | [bytebox_2.5.1_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.1_amd64.deb) |
+| Platform                   | Download                                                                                               |
+| -------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Windows (.exe)             | [ByteBox.Setup.2.5.1.exe](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox.Setup.2.5.1.exe) |
+| Linux AppImage             | [ByteBox-2.5.1.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.1.AppImage)   |
+| Linux .deb (Debian/Ubuntu) | [bytebox_2.5.1_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.1_amd64.deb) |
 
 ## Notes
 

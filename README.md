@@ -67,23 +67,35 @@
 
 ## 📦 Installation
 
-### Prerequisites
+### 🖥️ **Desktop App (Recommended)**
 
-- **Node.js** 18+ (LTS recommended)
-- **npm** or **pnpm** or **yarn**
+Download a pre-built native installer — no Node.js or Docker required.
 
-### ⚡ **Quick Setup (recommended)**
+| Platform                   | Download                                                                                               |
+| -------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Windows (.exe)             | [ByteBox.Setup.2.5.1.exe](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox.Setup.2.5.1.exe) |
+| Linux AppImage             | [ByteBox-2.5.1.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.1.AppImage)   |
+| Linux .deb (Debian/Ubuntu) | [bytebox_2.5.1_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.1_amd64.deb) |
+
+**Linux AppImage:**
 
 ```bash
-git clone https://github.com/pinkpixel-dev/bytebox.git
-cd bytebox
-npm run setup
-npm run dev
+chmod +x ByteBox-2.5.1.AppImage
+./ByteBox-2.5.1.AppImage
 ```
 
-The `setup` script handles everything: creates `.env`, installs dependencies, generates the Prisma client, applies migrations, and seeds example data.
+**Linux .deb:**
 
-Then open **http://localhost:1334**.
+```bash
+sudo dpkg -i bytebox_2.5.1_amd64.deb
+```
+
+**Windows:** Run the `.exe` installer and follow the setup wizard.
+
+The database is stored in the OS user-data directory and survives app updates:
+
+- Linux: `~/.config/ByteBox/bytebox.db`
+- Windows: `%APPDATA%\ByteBox\bytebox.db`
 
 ---
 
@@ -108,76 +120,42 @@ docker compose logs -f       # follow logs
 
 ---
 
-### 🖥️ **Desktop App (Electron)**
+### ⚡ **Clone & Run (Dev / Self-Host)**
 
-Runs ByteBox as a native installed application. Pre-built Linux installers are hosted on Cloudflare R2, and Windows installers are published through GitHub releases.
+For contributors or advanced users who want to run ByteBox from source.
 
-**Download pre-built installers from the [ByteBox website](https://bytebox.pro/electron-desktop/):**
+#### Prerequisites
 
-| Format                | Link                                                                                                   |
-| --------------------- | ------------------------------------------------------------------------------------------------------ |
-| AppImage (any distro) | [ByteBox-2.5.1.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.1.AppImage)   |
-| .deb (Debian/Ubuntu)  | [bytebox_2.5.1_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.1_amd64.deb) |
+- **Node.js** 18+ (LTS recommended)
+- **npm** or **pnpm** or **yarn**
 
-Or build from source:
-
-```bash
-# Dev mode (hot-reload)
-npm run electron:dev
-
-# Build installer (Linux)
-npm run electron:build:linux   # → release/*.AppImage + *.deb
-```
-
-The database is stored in the OS user-data directory (`~/.config/ByteBox/` on Linux) and survives app updates.
-
----
-
-### 🔧 **Manual Setup**
-
-### 1️⃣ **Clone the Repository**
+#### Quick Setup
 
 ```bash
 git clone https://github.com/pinkpixel-dev/bytebox.git
 cd bytebox
+npm run setup
+npm run dev
 ```
 
-### 2️⃣ **Create the environment file**
+The `setup` script handles everything: creates `.env`, installs dependencies, generates the Prisma client, applies migrations, and seeds example data.
+
+Then open **http://localhost:1334**.
+
+#### Manual Setup (step-by-step)
 
 ```bash
 cp .env.example .env
-```
-
-### 3️⃣ **Install Dependencies**
-
-```bash
 npm install
-```
-
-### 4️⃣ **Set Up the Database**
-
-```bash
 npx prisma generate
 npx prisma migrate deploy
-```
-
-### 5️⃣ **Seed the Database (Optional)**
-
-Populate with example cards:
-
-```bash
-npm run db:seed
-```
-
-### 6️⃣ **Start the Development Server**
-
-```bash
+npm run db:seed   # optional — seeds example cards
 npm run dev
 ```
 
 Open [http://localhost:1334](http://localhost:1334) in your browser. 🎉
 
-> **Note:** On first load, ByteBox automatically creates 5 default categories (Frontend, Backend, DevOps, Learning & Research, Ideas & Inspiration) if none exist. You can rename or delete them anytime.
+> **Note:** On first load, ByteBox automatically creates 5 default categories (Frontend, Backend, DevOps, Learning & Research, Ideas & Inspiration) if none exist.
 
 ---
 

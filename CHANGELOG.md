@@ -42,6 +42,14 @@ This release rolls the feature work from `2.5.0` forward into a fresh `2.5.1` in
 - **Electron packaging fixes** for Turbopack alias packages, Prisma client bundling, and `better-sqlite3` Electron ABI handling
 - **Desktop packaging documentation updates** and refreshed release/download guidance
 
+#### Downloads
+
+| Platform                   | Link                                                                                                   |
+| -------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Windows (.exe)             | [ByteBox.Setup.2.5.1.exe](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox.Setup.2.5.1.exe) |
+| Linux AppImage             | [ByteBox-2.5.1.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.1.AppImage)   |
+| Linux .deb (Debian/Ubuntu) | [bytebox_2.5.1_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.1_amd64.deb) |
+
 ## [2.5.0] - 2026-03-04
 
 ### 🎯 Category Ordering, Drag-and-Drop, Neon Glow UI & Electron Packaging Fix

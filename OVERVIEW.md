@@ -1,7 +1,7 @@
 # 📚 ByteBox – Project Overview
 
-**Last Updated**: March 5, 2026
-**Version**: 2.5.0
+**Last Updated**: March 12, 2026
+**Version**: 2.5.1
 **Author**: [Pink Pixel](https://pinkpixel.dev)
 **License**: Apache 2.0
 **Status**: ✅ Stable & Complete
@@ -595,13 +595,13 @@ bytebox/
 
 ### Color Palette
 
-| Color                | Value     | Usage                                   |
-| -------------------- | --------- | --------------------------------------- |
-| **Pink**             | `#ec4899` | Primary accent, gradients, focus states |
-| **Purple**           | `#8b5cf6` | Secondary accent, gradients             |
-| **Surface Base**     | `#0a0a0a` | Primary app background surface          |
-| **Surface Contrast** | `#ffffff` | High-contrast background/surface option |
-| **Text Primary Dark**| `#1f2937` | Dark text token for bright surfaces     |
+| Color                  | Value     | Usage                                   |
+| ---------------------- | --------- | --------------------------------------- |
+| **Pink**               | `#ec4899` | Primary accent, gradients, focus states |
+| **Purple**             | `#8b5cf6` | Secondary accent, gradients             |
+| **Surface Base**       | `#0a0a0a` | Primary app background surface          |
+| **Surface Contrast**   | `#ffffff` | High-contrast background/surface option |
+| **Text Primary Dark**  | `#1f2937` | Dark text token for bright surfaces     |
 | **Text Primary Light** | `#f9fafb` | Light text token for deep surfaces      |
 
 ### Typography
@@ -742,25 +742,30 @@ npm run dev  # → http://localhost:3000
 
 ## 🚀 Deployment Options
 
-### Vercel (Recommended)
+### 🖥️ Desktop Installers (Recommended for End Users)
 
-1. Connect GitHub repository to Vercel
-2. Set environment variable: `DATABASE_URL` (use hosted database or local SQLite)
-3. Deploy! 🎉
+ByteBox ships pre-built native installers via Cloudflare R2. No Node.js or Docker required.
 
-### Netlify
+| Platform                   | Download                                                                                               |
+| -------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Windows (.exe)             | [ByteBox.Setup.2.5.1.exe](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox.Setup.2.5.1.exe) |
+| Linux AppImage             | [ByteBox-2.5.1.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.1.AppImage)   |
+| Linux .deb (Debian/Ubuntu) | [bytebox_2.5.1_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.1_amd64.deb) |
 
-1. Connect GitHub repository
-2. Set build command: `npm run build`
-3. Set publish directory: `.next`
-4. Deploy! 🎉
+The packaged Electron app runs a bundled Next.js server internally. The SQLite database is stored in the OS user-data directory and survives app updates:
 
-### Self-Hosted
+- Linux: `~/.config/ByteBox/bytebox.db`
+- Windows: `%APPDATA%\ByteBox\bytebox.db`
 
-1. Build the app: `npm run build`
-2. Start server: `npm run start`
-3. Configure reverse proxy (nginx/Apache)
-4. Use PM2 or systemd for process management
+### 🐳 Docker
+
+Zero host-dependency deployment with automatic migrations:
+
+```bash
+docker compose up --build -d
+```
+
+Open `http://localhost:1334`. Data persists in the `bytebox-data` Docker volume.
 
 ---
 

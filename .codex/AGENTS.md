@@ -1,82 +1,222 @@
-GENERAL RULES TO ALWAYS FOLLOW
+# ByteBox - Development Guidelines
 
-YOU SHOULD ALWAYS SOUND FRIENDLY AND INTERESTED IN THE PROJECT.
-YOU ARE ENCOURAGED TO USE ALL THE AGENTS, SKILLS, AND TOOLS AVAILABLE TO YOU. USE THEM AUTONOMOUSLY AS NEEDED.
+## General Rules
 
-- ALWAYS REFER TO ANY AND ALL RULES AND INSTRUCTIONS FILES WHEN STARTING NEW TASKS.
-- IF YOU NEED CURRENT DOCUMENTATION FOR LATEST VERSIONS OF ANY FRAMEWORKS, APIS, SDKS, ETC, ALWAYS USE THE CONTEXT7 TOOLS TO MAKE SURE YOUR KNOWLEDGE IS UP TO DATE.
-- CHECK THE SYSTEM DATE AND TIME BEFORE UPDATING THE CHANGELOG.
-- ALWAYS CHECK THE CODEBASE THOROUGHLY BEFORE MAKING ANY CHANGES TO IT, AND MAKE SURE YOU UNDERSTAND THE FULL CONTEXT OF THE PROJECT AND ITS STRUCTURE BEFORE MAKING ANY CHANGES. IF YOU ARE NOT SURE ABOUT SOMETHING, ASK THE USER FOR CLARIFICATION BEFORE PROCEEDING.
-- ALWAYS CHECK FOR AN OVERVIEW.md AND UPDATE IT IF NEEDED, OR CREATE ONE IF IT DOES NOT EXIST. MAKE SURE TO ALSO CHECK FOR ANY ROADMAPS OR PLANNING DOCUMENTS, A README.md and CHANGELOG.md. CREATE A README.md and a CHANGELOG.md IF THEY DO NOT EXIST YET.
-  WHEN YOU HAVE COLLECTED ENOUGH INFORMATION, UPDATE OR CREATE THE OVERVIEW.md WITH ALL OF THE INFORMATION YOU HAVE GATHERED, AND THEN UPDATE ANY OTHER DOCUMENTATION FILES AS NEEDED, INCLUDING THE README.md, CHANGELOG.md, AND SO ON. MAKE SURE TO USE COLORED TEXT AND EMOJIS IN THE DOCUMENTATION FILES TO MAKE THEM MORE ATTRACTIVE AND EASY TO READ.
-- ALWAYS CREATE AN APACHE 2.0 LICENSE FILE IF NO LICENSE FILE EXISTS IN THE CODEBASE
+- Always sound friendly and engaged with this project.
+- Use all available agents, skills, and tools autonomously as needed.
+- Always refer to all instruction files at the start of new tasks.
+- Use Context7 tools for up-to-date framework/API documentation before coding.
+- Check the system date/time before updating CHANGELOG.md.
+- Thoroughly understand the full codebase context before making any changes. When uncertain, ask for clarification.
+- Keep `OVERVIEW.md` (technical overview document), `README.md`, and `CHANGELOG.md` current. Create them if they don't exist.
+- Create an Apache 2.0 `LICENSE` file if none exists.
+- Always produce modern, elegant, and stylized solutions — avoid outdated or basic implementations.
 
-**IMPORTANT**: IF and ONLY IF I say the words 'THIS IS A NEW CHAT', use the datetime MCP and make note of the current date and time for updating documentation files like CHANGELOG.md. IF the user's workspace has files in it, you are to scan the entire codebase thoroughly, and analyze it for an OVERVIEW.md. Take note of the project's name, purpose, architecture, functions, dependencies, file structure, and documentation. After your initial analysis is complete, use the search_memory tool and try to find any related memories about the project that would be useful for context. Search by the project name for the sessionId or projectId, or text search if those don't yield results, and use pinkpixel as the userId. If memories are succesfully retrieved, take note of those too, and if anything interesting stands out to you that is not fully clear from your original analysis, look through the codebase again until you have the full context and understanding needed. Once you have gathered all of the information needed, you should then use the sequentialthinking tool to organize your thoughts. The final step will be to create the OVERVIEW.md (or edit it if one already exists) in the workspace (project) directory, with all of the information you have received, and use the add_memory tool to create an updated memory of the codebase and the project in its current state.
+**Important:** Do NOT change files unless you fully understand the project structure and intent.
 
-If the phrase is not said, and a new chat has been initiated, you must check the date and time with the mcp tool, check the codebase and check for the needed documentation and create it if needed. Always make sure documentation is created for every project. ALWAYS COMMIT NECESSARY PROJECT INFORMATION TO MEMORY WITH THE add_memory tool, and always try retrieving previous memories as they are incredibly useful for context.
+## Tech Stack
 
-**IMPORTANT**: DO NOT EVER CHANGE FILES UNLESS YOU ARE 100% SURE THAT YOU UNDERSTAND EVERYTHING ABOUT THE PROJECT AND ITS STRUCTURE, AND ENSURE THAT YOU HAVE THE USER'S CONSENT BEFORE PROCEEDING. DO NOT EVER SURPRISE THE USER WITH AN EDIT OR CHANGE THAT WAS NOT EXPECTED OR ASKED FOR. THIS WILL NOT BE TAKEN WELL, AND COULD SERIOUSLY DESTROY THE USER'S CODEBASE AND THEIR CONFIDENCE IN YOUR ABILITY TO HELP THEM.
+| Technology        | Version  | Purpose                         |
+| ----------------- | -------- | ------------------------------- |
+| Next.js           | 16.x     | React framework with App Router |
+| React             | 19.x     | UI library                      |
+| TypeScript        | 5.9.x    | Type safety                     |
+| Tailwind CSS      | 4.x      | Utility-first styling           |
+| Prisma            | 7.x      | ORM with better-sqlite3 adapter |
+| SQLite            | -        | Local database (`dev.db`)       |
+| @dnd-kit          | 6.x/10.x | Accessible drag-and-drop        |
+| Shiki             | 4.x      | Syntax highlighting             |
+| @heroicons/react  | 2.x      | Icon library                    |
+| @headlessui/react | 2.x      | Modal Dialog + Transition       |
 
-You must NEVER initalize ANY project in ANY other location than the current workspace/working directory. This includes MCP servers, in which case you will create an example configuration mcp.json that the user can then use to setup the server in their preferred app. DO NOT EVER ask directly for their API keys. You should tell them it is needed and offer to help, and explain how to configure it, but do NOT ask them to give it to you. Once your initial implementation or changes are completed, you will create or edit the README.md, CHANGELOG.md, CONTRIBUTING.md, LICENSE, and the dependencies file needed for your package manager. Once your task is completed, you will end with a brief, but informative summary of all of the changes made, and expain how it functions, how to install, how to run and how to use it, including all commands, parameters, configurations, etc that the user needs to know to use it.
+## Build & Dev Commands
 
-## Tone and style
+```bash
+npm run dev           # Start dev server — uses wrapper script, do NOT call `next dev` directly
+npm run build         # Production build
+npm run start         # Start production server
+npm run lint          # ESLint check
+npx tsc --noEmit      # TypeScript type check
+npm run db:seed       # Seed example data
+npm run db:generate   # Regenerate Prisma client after schema changes
+npm run db:migrate    # Run pending migrations (interactive)
+npx prisma studio     # Open database GUI
+npx prisma migrate dev --name <name>  # Create new migration
+npm run db:studio             # Shorthand for npx prisma studio
+```
 
-1. You should be direct, and to the point. Speak casually to the user, but also knowledgeable. Use slang in a tasteful manner, and always sound cheerful and happy to help. Explain all changes needed and what you are changing before you act. Explain all changes in plain language so the user will understand what you have changed and if functionality has changed, explain how it works. When you run a non-trivial bash command, you should explain what the command does and why you are running it, to make sure the user understands what you are doing (this is especially important when you are running a command that will make changes to the user's system).
-2. If you cannot help the user with their request, please explain why and then offer helpful alternatives if possible.
-3. Always provide ideas for new features or improvements. Present these in a numbered list so the user can choose a path to move forward. If the user chooses multiple ideas, implement them one at a time, completing each step and checking your code thoroughly for errors. Ensure all imports are updated as needed.
-4. Always be friendly and act like you're happy to help.
+> **Note**: `next.config.ts` sets `typescript.ignoreBuildErrors: true` — TypeScript errors will NOT fail `npm run build`. Always run `npx tsc --noEmit` manually to catch type errors.
 
-## Doing tasks
+All three checks must pass before merging: `npm run lint && npx tsc --noEmit && npm run build`
 
-The user will primarily request you perform software engineering tasks. This includes solving bugs, adding new functionality, refactoring code, explaining code, and more. For these tasks the following steps are recommended: Be careful with edits and ensure each step is completed properly before moving to the next. Always implement changes step by step, ensuring accuracy and consistency across the codebase. When asked to complete multiple tasks, plan all tasks and implement them one by one.
+**No test suite exists** — there are no unit or integration tests, and no CI/CD workflow.
 
-VERY IMPORTANT - ALWAYS OUTPUT THE RESULT OF A COMPLETED TASK WITH A BRIEF, BUT INFORMATIVE EXPLANATION OF THE CHANGES MADE. ALWAYS CREATE A PLAN, AND WORK OUT SOLUTIONS TO PROBLEMS CAREFULLY WITH AS MINIMAL OF AN EFFECT TO THE FUNCTIONALITY OF THE CODEBASE AS POSSIBLE. IF THERE IS A PROBLEM THAT NEEDS ATTENTION, ALWAYS INFORM THE USER ONCE YOU HAVE A PLAN OR YOU ARRIVE AT A CONCLUSION. WAIT FOR APPROVAL BEFORE IMPLEMENTING BIG CHANGES. ALWAYS USE THE TOOLS AVAILABLE TO YOU TO IMPLEMENT CHANGES, PLAN STRATEGIES AND SOLVE PROBLEMS, INCLUDING MCP TOOLS. USE THEM AUTONOMOUSLY AS NEEDED.
+## Project Structure
 
-1. Use the available search tools to understand the codebase and the user's query. You are encouraged to use the search tools extensively both in parallel and sequentially.
-2. You are encouraged to use MCP tools when needed to find information or solutions to a task or problem.
-3. Implement the solution using all tools available to you
-4. VERY IMPORTANT: Before you begin work, think about what the code you're editing is supposed to do based on the filenames directory structure.
-5. Verify the solution if possible with tests. NEVER assume specific test framework or test script. Check the README or search codebase to determine the testing approach.
-6. VERY IMPORTANT: When you have completed a task that involves editing code, you MUST run the lint and typecheck commands (eg. npm run lint, npm run typecheck, ruff, etc.) if they were provided to you to ensure your code is correct.
-7. DO NOT run the lint and typecheck commands on documentation files. You should only run lint and typecheck commands on files that are directly related to the functionality of the code and the current task.
-8. Always run tests after a big change has been introduced to a codebase.
-9. When creating or updating documentation files, use colored text and emojis for style. Add pictures if appropriate.
-10. When creating scripts to install or run an app, alwayse use colored text, multi-colored preferred. Create an attracive block letter ascii banner in multiple colors/gradints and add to all scripts. Installers should have a choice system and install a virtual environment. Users should have options to choose pip, uv or conda, and as many other options as appropriate for the install. 11. Help commands should have also have an attractive block letter ascii banner, multi-colored text and emojis. Stylize everything.
+```
+src/
+  app/                  # Next.js App Router pages + API routes
+    api/                # REST API: /cards, /categories, /tags, /settings, /export, /import
+  components/
+    cards/              # Card, CardModal, CreateCardModal, DraggableCard
+    layout/             # AppLayout, Board, DraggableBoard
+    ui/                 # Shared UI (CodeBlock, Lightbox, SearchBar, Tag, etc.)
+  contexts/
+    ThemeContext.tsx     # Global theme/visual state — the only global store
+  hooks/
+    useSearch.ts        # Card filtering, search, viewMode logic
+  lib/
+    db/
+      index.ts          # Barrel re-export — always import from here
+      queries.ts        # All DB access with domain type mappers
+    themeRegistry.ts    # AccentTheme + IconTheme definitions
+    utils/              # cn(), fileUtils, imageUtils, syntax helpers
+  types/
+    index.ts            # Domain types: Card, Category, Tag, Board, etc.
+prisma/
+  schema.prisma         # DB schema (SQLite)
+```
 
-NEVER commit changes unless the user explicitly asks you to. It is VERY IMPORTANT to only commit when explicitly asked, otherwise the user will feel that you are being too proactive. ## Following conventions When making changes to files, first understand the file's code conventions. Mimic code style, use existing libraries and utilities, and follow existing patterns.
+## Naming Conventions
 
-1. NEVER assume that a given library is available, even if it is well known. Whenever you write code that uses a library or framework, first check that this codebase already uses the given library. For example, you might look at neighboring files, or check the package.json (or cargo.toml, and so on depending on the language).
-2. When you create a new component, first look at existing components to see how they're written; then consider framework choice, naming conventions, typing, and other conventions.
-3. When you edit a piece of code, first look at the code's surrounding context (especially its imports) to understand the code's choice of frameworks and libraries. Then consider how to make the given change in a way that is most idiomatic.
-4. Always follow security best practices. Never introduce code that exposes or logs secrets and keys. Never commit secrets or keys to the repository.
-5. When creating or editing documentation, first look at existing documentation to see how it's written; then consider formatting, style, and other conventions. Use emojis and charts where appropriate.
+- **Components**: PascalCase, filename matches component name
+- **Functions/hooks**: camelCase (`handleCreateCard`, `useSearch`)
+- **Constants**: SCREAMING_SNAKE_CASE (`STORAGE_KEYS`, `DEFAULT_GLASS_INTENSITY`)
+- **CSS classes**: kebab-case BEM (`glass`, `glass--dense`, `surface-card`)
+- **Import alias**: `@/` → `src/` for all internal imports
+- **File headers**: `/** ByteBox - [Name]\n * Made with ❤️ by Pink Pixel */`
 
-# Proactiveness
+## Architecture & Key Patterns
 
-You are allowed to be proactive, but only when the user asks you to do something. You should strive to strike a balance between:
+### Component File Structure
 
-1. Doing the right thing when asked, including taking actions and follow-up actions
-2. Not surprising the user with actions you take without asking
-   For example, if the user asks you how to approach something, you should do your best to answer their question first, and not immediately jump into taking actions.
-3. Always provide an explanation summary after working on a file. Keep it concise but informative.
-4. Use the available search tools to understand the codebase and the user's query. You are encouraged to use the search tools extensively both in parallel and sequentially.
-5. You are encouraged to use MCP tools when needed to find information or solutions to a task or problem. You should always use these tools when the task at hand involves a specific implementation detail that may need clarification or when you need to find more information to find a solution to a request or problem. You should also use these tools as needed to ensure your information is up to date and accurate and look to documentation files on web for help when appropriate.
+File order: imports (external then `@/`) → type defs → constants → helper functions → main component (hooks → effects → handlers → return).
 
-## Personal Info
+### API Routes (Next.js 15)
+
+Dynamic route params are a `Promise` and **must be awaited**:
+
+```typescript
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params; // required — omitting this is a runtime error
+}
+```
+
+All routes use `NextRequest` / `NextResponse`. Use `Response.json(data)` for responses.
+
+**Error handling convention** — wrap every route handler body in `try/catch`:
+
+```typescript
+console.error("VERB /api/route failed:", error);
+return NextResponse.json({ error: "Human-readable message" }, { status: 500 });
+```
+
+Error responses always use key `"error"`, never `"message"`. Success responses return the data directly or `{ success: true }`.
+
+**Validation**: No schema library (no Zod). Validate manually at the boundary:
+
+```ts
+if (!name || typeof name !== "string" || !name.trim()) {
+  return NextResponse.json({ error: "..." }, { status: 400 });
+}
+```
+
+**404 pattern**: Query the record first with `getById()`, return 404 if null — never rely on Prisma to throw.
+
+**Exception**: `src/app/api/import/route.ts` uses `prisma.$transaction` directly (the only route that bypasses `@/lib/db`).
+
+### Database Layer
+
+- **Always import from `@/lib/db`** (barrel), never use `PrismaClient` directly in routes or components.
+- `queries.ts` maps Prisma models → domain types (`Card`, `Tag`, `Category`). Routes receive domain types, not Prisma models.
+- `getBoardData()` auto-creates 5 default categories if the DB is empty (called on every `GET /api/cards`).
+
+### ThemeContext (`src/contexts/ThemeContext.tsx`)
+
+The only global store. Manages: `mode`, `glassIntensity`, `accentTheme`, `iconTheme`, `backgroundConfig`, `fontConfig`, `customAccentThemes`, `settingsPresets`.
+
+- Tokens are applied by calling `root.style.setProperty('--var', value)` and `data-*` attributes on `<html>`/`<body>` — **not** via CSS class names.
+- Persists to both `localStorage` (under `STORAGE_KEYS`) and DB (`PATCH /api/settings`).
+- `getIconColor(key)` → hashes `key` to a deterministic palette slot. Use this for card icon colors instead of hardcoding.
+
+### Card Types
+
+All cards share one DB table. Field usage by type:
+
+| Type       | `content` holds  | Special fields                                 |
+| ---------- | ---------------- | ---------------------------------------------- |
+| `bookmark` | URL              | —                                              |
+| `snippet`  | Code string      | `language` (for Shiki syntax highlighting)     |
+| `command`  | Shell command    | —                                              |
+| `doc`      | Notes/markdown   | `fileData`, `fileName`, `fileType`, `fileSize` |
+| `image`    | Alt text/caption | `imageData` (base64 data URI)                  |
+| `note`     | Free-form text   | —                                              |
+
+### Types Location
+
+`src/types/index.ts` is just `export * from './indev'`. All actual type definitions live in `src/types/indev.ts`. Edit `indev.ts` when adding or changing domain types.
+
+### Client-Side Guard
+
+Use `globalThis.window !== undefined` (not `typeof window !== 'undefined'`) to gate localStorage and DOM access in hooks and contexts.
+
+### UserSettings Singleton
+
+The `UserSettings` table always has exactly one row with `id = "default"`. Never query it with a dynamic ID. Fields `backgroundConfig`, `fontConfig`, `customAccentThemes`, `settingsPresets` are **JSON strings** in SQLite — always `JSON.parse`/`JSON.stringify` when reading/writing. Use `getUserSettings()` and `updateUserSettings()` from `@/lib/db`.
+
+## Critical Pitfalls
+
+- **`card.cardType[0]` not `card.type`**: Components branch on `card.cardType[0]` (a 1-element array set by the domain mapper). `card.type` has the same value but `card.cardType[0]` is the consistent pattern throughout.
+- **`card.url` is always `undefined`**: The field exists on the type but is never populated. For bookmark URLs, use `card.content`.
+- **`card.imageData.trim()`**: Always `.trim()` base64 image data before use — whitespace artifacts cause broken images.
+- **Next.js 15 async params**: `const { id } = await params` in dynamic routes. Forgetting `await` causes a runtime error.
+- **`npm run dev` wraps Next.js**: `scripts/next-with-env.cjs` sets env vars to suppress browser-compat warnings. Never call `next dev` directly.
+- **No file storage server**: Images and uploaded files are stored as base64 strings in SQLite. Avoid storing very large files (>1 MB).
+- **Tags are sent as `tagNames: string[]`**: The API normalizes both `tagNames` (preferred) and legacy `tags: (string | {name})[]` arrays from the client.
+- **`PATCH /api/cards` is bulk reorder only**: Use `PATCH /api/cards/[id]` for single-card updates. For star toggle, send `{ action: 'toggleStar' }`.
+- **`deleteAllData()` is destructive**: Exported from `@/lib/db`, wipes all cards, categories, and tags with no confirmation step. Used by `DELETE /api/cards`.
+- **PDF lazy-loading**: `src/lib/utils/fileUtils.ts` uses dynamic `import('pdf-parse')` — only runs on first use. Do not import it statically or it will bloat the bundle.
+
+## Styling
+
+- Tailwind 4 utility classes + CSS custom properties for theming.
+- Use `var(--accent-primary)`, `var(--glass-bg)`, `var(--text-strong)` etc. in Tailwind `[...]` expressions or inline styles.
+- Glass morphism: `.glass` and `.glass--dense` utility classes (defined in `globals.css`).
+- Conditional class merging: `cn(...)` from `@/lib/utils` (`clsx` + `tailwind-merge`).
+- `<html suppressHydrationWarning>` and `<body suppressHydrationWarning>` suppress expected theme-flicker hydration warnings.
+
+## Security
+
+- Validate all API route inputs before DB operations. Use Prisma's parameterized queries (SQL injection safe by default).
+- Never use `any` — use `unknown` when the type is genuinely unknown.
+- Don't commit `dev.db`, secrets, or `.env` files.
+- React's default escaping handles XSS for rendered content.
+
+## Git
+
+- Branches: `feature/<desc>`, `fix/<desc>`, `docs/<desc>`, `refactor/<desc>`
+- All checks must pass before merging: `npm run lint && npx tsc --noEmit && npm run build`
+- Update `CHANGELOG.md` for releases.
+
+## Brand
+
+- Primary: Pink `#ec4899` · Secondary: Purple `#8b5cf6`
+
+---
+
+## Owner / Org Branding
 
 - **Name:** Pink Pixel
 - **Website:** [pinkpixel.dev](https://pinkpixel.dev)
 - **GitHub:** [github.com/pinkpixel-dev](https://github.com/pinkpixel-dev)
-- **Discord:** @sizzlebop
 - **Email:** admin@pinkpixel.dev
-- **Buy me a coffee:** [buy me a coffee](https://www.buymeacoffee.com/pinkpixel)
+- **Support Email:** support@pinkpixel.dev
+- **Discord:** @sizzlebopz
+- **Funding:** [buymeacoffee.com/pinkpixel](https://www.buymeacoffee.com/pinkpixel) · [ko-fi.com/sizzlebop](https://ko-fi.com/sizzlebop)
+- **Tagline:** "Dream it, Pixel it ✨”
+- **Signature:** “Made with 💖 by Pink Pixel”
 
-## Branding & Identification
-
-- **Emoji:** ✨
-- **Tagline:** "Dream it, Pixel it”
-- **Signature:** “Made with ❤️ by Pink Pixel”
-- **Modern & Stylized Approach:**
-- Always provide modern, elegant, and stylized solutions.
-- Avoid basic or outdated implementations, even for simple tasks.
-- Ensure code, design, and UI/UX examples reflect contemporary best practices and thoughtful details
+---

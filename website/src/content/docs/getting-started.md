@@ -1,16 +1,62 @@
 ---
 title: Getting Started
-description: Set up ByteBox locally in minutes.
+description: Get ByteBox up and running in minutes.
 ---
 
-ByteBox is a Next.js + Prisma + SQLite application designed for fast local-first usage.
+ByteBox can be installed as a native desktop app, run via Docker, or self-hosted from source. Choose the method that fits your workflow.
 
-## Prerequisites
+## Option 1 — Desktop Installer (Recommended)
+
+Download a pre-built native installer — no Node.js or Docker required.
+
+| Platform                   | Download                                                                                               |
+| -------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Windows (.exe)             | [ByteBox.Setup.2.5.1.exe](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox.Setup.2.5.1.exe) |
+| Linux AppImage             | [ByteBox-2.5.1.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.1.AppImage)   |
+| Linux .deb (Debian/Ubuntu) | [bytebox_2.5.1_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.1_amd64.deb) |
+
+**Linux AppImage quickstart:**
+
+```bash
+chmod +x ByteBox-2.5.1.AppImage
+./ByteBox-2.5.1.AppImage
+```
+
+**Linux .deb quickstart:**
+
+```bash
+sudo dpkg -i bytebox_2.5.1_amd64.deb
+```
+
+**Windows:** Run the `.exe` installer and follow the setup wizard.
+
+The database is stored in the OS user-data directory and survives app updates:
+
+- Linux: `~/.config/ByteBox/bytebox.db`
+- Windows: `%APPDATA%\ByteBox\bytebox.db`
+
+## Option 2 — Docker
+
+No Node.js required on the host. Just Docker.
+
+```bash
+git clone https://github.com/pinkpixel-dev/bytebox.git
+cd bytebox
+docker compose up --build -d
+```
+
+Open `http://localhost:1334`. Data persists in the `bytebox-data` Docker volume.
+
+## Option 3 — Clone & Run (Dev / Self-Host)
+
+For contributors or advanced users who want to run ByteBox from source.
+
+### Prerequisites
 
 - Node.js 18+ (Node 22 recommended)
 - npm 10+
 
-## Quick Setup (Recommended)
+### One-Command Setup
 
 ```bash
 git clone https://github.com/pinkpixel-dev/bytebox.git
@@ -21,15 +67,9 @@ npm run dev
 
 Open `http://localhost:1334`.
 
-The setup script handles:
+The setup script handles `.env` creation, dependency install, Prisma client generation, migration application, and seed data population.
 
-- `.env` creation (if missing)
-- dependency install
-- Prisma client generation
-- migration application
-- seed data population
-
-## Manual Setup
+### Manual Setup
 
 ```bash
 cp .env.example .env
