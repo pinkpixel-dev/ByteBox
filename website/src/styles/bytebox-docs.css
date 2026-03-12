@@ -18,6 +18,8 @@
   --sl-color-gray-5: #59647a;
   --sl-color-gray-6: #3f495c;
   --sl-color-black: #090b10;
+
+  --sl-nav-height: 5rem;
 }
 
 body {
@@ -52,7 +54,7 @@ body {
 }
 
 .site-title img {
-  max-height: 2rem;
+  max-height: 3.2rem;
   width: auto;
   filter: drop-shadow(0 4px 20px rgba(247, 37, 133, 0.25));
 }
@@ -117,8 +119,12 @@ body {
     padding: 1.25rem;
   }
 
+  :root {
+    --sl-nav-height: 4rem;
+  }
+
   .site-title img {
-    max-height: 1.75rem;
+    max-height: 2.4rem;
   }
 }
 

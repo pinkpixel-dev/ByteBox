@@ -20,6 +20,7 @@ export default defineConfig({
 				Sidebar: './src/components/starlight/Sidebar.astro',
 				Footer: './src/components/starlight/Footer.astro',
 				MobileMenuFooter: './src/components/starlight/MobileMenuFooter.astro',
+				SocialIcons: './src/components/starlight/SocialIcons.astro',
 			},
 			sidebar: [
 				{
