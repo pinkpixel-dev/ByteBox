@@ -12,6 +12,8 @@
 
 **Dream it, Pixel it** 🌸
 
+![ByteBox Screenshot](./screenshot.png)
+
 ---
 
 ## 🚀 Features

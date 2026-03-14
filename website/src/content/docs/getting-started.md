@@ -5,6 +5,8 @@ description: Get ByteBox up and running in minutes.
 
 ByteBox can be installed as a native desktop app, run via Docker, or self-hosted from source. Choose the method that fits your workflow.
 
+![ByteBox Screenshot](/screenshot.png)
+
 ## Option 1 — Desktop Installer (Recommended)
 
 Download a pre-built native installer — no Node.js or Docker required.
