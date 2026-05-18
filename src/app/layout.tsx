@@ -26,6 +26,7 @@ import {
   Syne_Mono,
   Nova_Mono,
   Kode_Mono,
+  Space_Grotesk,
 } from "next/font/google";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import "./globals.css";
@@ -181,6 +182,12 @@ const kodeMono = Kode_Mono({
   weight: ["400", "700"],
 });
 
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL('http://localhost:3000'),
   title: "ByteBox - Developer Resource Dashboard",
@@ -195,7 +202,7 @@ export const metadata: Metadata = {
     siteName: "ByteBox",
     images: [
       {
-        url: "/logo_banner.png",
+        url: "/icon.png",
         width: 1200,
       },
     ],
@@ -231,7 +238,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${jetBrainsMono.variable} ${inter.variable} ${roboto.variable} ${openSans.variable} ${poppins.variable} ${lato.variable} ${nunito.variable} ${sourceSans.variable} ${ubuntu.variable} ${shadowsIntoLight.variable} ${indieFlower.variable} ${permanentMarker.variable} ${caveatBrush.variable} ${gochiHand.variable} ${delius.variable} ${acme.variable} ${firaCode.variable} ${sourceCodePro.variable} ${robotoMono.variable} ${ubuntuMono.variable} ${spaceMono.variable} ${syneMono.variable} ${novaMono.variable} ${kodeMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${jetBrainsMono.variable} ${inter.variable} ${roboto.variable} ${openSans.variable} ${poppins.variable} ${lato.variable} ${nunito.variable} ${sourceSans.variable} ${ubuntu.variable} ${shadowsIntoLight.variable} ${indieFlower.variable} ${permanentMarker.variable} ${caveatBrush.variable} ${gochiHand.variable} ${delius.variable} ${acme.variable} ${firaCode.variable} ${sourceCodePro.variable} ${robotoMono.variable} ${ubuntuMono.variable} ${spaceMono.variable} ${syneMono.variable} ${novaMono.variable} ${kodeMono.variable} ${spaceGrotesk.variable} antialiased`}
         suppressHydrationWarning
       >
         <ThemeProvider>

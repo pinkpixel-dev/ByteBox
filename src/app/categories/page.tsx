@@ -205,7 +205,7 @@ export default function CategoriesPage() {
         <div className="text-center py-12">
           <FolderIcon className="w-16 h-16 mx-auto text-foreground/20 mb-4" />
           <h3 className="text-xl font-semibold mb-2">No categories yet</h3>
-          <p className="text-[var(--text-soft)] mb-4">
+          <p className="text-(--text-soft) mb-4">
             Create your first category to start organizing your board
           </p>
           <button
@@ -249,7 +249,7 @@ export default function CategoriesPage() {
                   className={cn(
                     'w-6 h-6 rounded-lg flex items-center justify-center transition-all',
                     'opacity-0 group-hover:opacity-100',
-                    'hover:bg-[color-mix(in_srgb,var(--card-border)_30%,transparent)] text-[var(--text-soft)] hover:text-[var(--text-strong)]'
+                    'hover:bg-[color-mix(in_srgb,var(--card-border)_30%,transparent)] text-(--text-soft) hover:text-(--text-strong)]'
                   )}
                   aria-label={`Rename ${cat.name}`}
                   title="Edit category"
@@ -264,7 +264,7 @@ export default function CategoriesPage() {
                   className={cn(
                     'w-6 h-6 rounded-lg flex items-center justify-center transition-all',
                     'opacity-0 group-hover:opacity-100',
-                    'hover:bg-red-500/20 text-[var(--text-soft)] hover:text-red-400',
+                    'hover:bg-red-500/20 text-(--text-soft) hover:text-red-400',
                     isDeleting && 'opacity-100 animate-pulse'
                   )}
                   aria-label={`Delete ${cat.name}`}
@@ -278,7 +278,7 @@ export default function CategoriesPage() {
               {isConfirmingDelete && (
                 <div className="absolute inset-0 rounded-2xl flex flex-col items-center justify-center gap-2 p-4 z-10 bg-[color-mix(in_srgb,var(--surface-card)_95%,transparent)] backdrop-blur-sm border border-red-500/30">
                   <p className="text-sm text-red-400 text-center font-medium">Delete &ldquo;{cat.name}&rdquo;?</p>
-                  <p className="text-xs text-[var(--text-soft)] text-center">This will also delete all {cardCount} card{cardCount === 1 ? '' : 's'} in it.</p>
+                  <p className="text-xs text-(--text-soft) text-center">This will also delete all {cardCount} card{cardCount === 1 ? '' : 's'} in it.</p>
                   <div className="flex gap-2 mt-1">
                     <button
                       onClick={(e) => { e.stopPropagation(); handleDeleteCategory(cat.id); }}
@@ -288,7 +288,7 @@ export default function CategoriesPage() {
                     </button>
                     <button
                       onClick={(e) => { e.stopPropagation(); setDeleteConfirmId(null); }}
-                      className="px-3 py-1.5 rounded-lg text-xs border border-[color-mix(in_srgb,var(--card-border)_60%,transparent)] text-[var(--text-soft)] hover:text-[var(--text-strong)] transition-colors"
+                      className="px-3 py-1.5 rounded-lg text-xs border border-[color-mix(in_srgb,var(--card-border)_60%,transparent)] text-(--text-soft) hover:text-(--text-strong) transition-colors"
                     >
                       Cancel
                     </button>
@@ -307,7 +307,7 @@ export default function CategoriesPage() {
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter') handleSaveEdit(cat.id); if (e.key === 'Escape') setEditingId(null); }}
-                    className="w-full px-3 py-2 rounded-lg text-sm bg-[color-mix(in_srgb,var(--surface-card)_80%,transparent)] border border-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] text-[var(--text-strong)] focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg text-sm bg-[color-mix(in_srgb,var(--surface-card)_80%,transparent)] border border-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] text-(--text-strong) focus:outline-none"
                     autoFocus
                   />
                   <div className="flex flex-wrap gap-1.5 justify-center">
@@ -346,7 +346,7 @@ export default function CategoriesPage() {
                     </button>
                     <button
                       onClick={() => setEditingId(null)}
-                      className="px-3 py-1.5 rounded-lg text-xs border border-[color-mix(in_srgb,var(--card-border)_60%,transparent)] text-[var(--text-soft)]"
+                      className="px-3 py-1.5 rounded-lg text-xs border border-[color-mix(in_srgb,var(--card-border)_60%,transparent)] text-(--text-soft) hover:text-(--text-strong)"
                     >
                       Cancel
                     </button>
@@ -361,15 +361,15 @@ export default function CategoriesPage() {
               >
                 <div className="flex items-start justify-between mb-2 pr-10">
                   <span
-                    className="w-4 h-4 rounded-full mt-0.5 flex-shrink-0"
+                    className="w-4 h-4 rounded-full mt-0.5 shrink-0"
                     style={{ backgroundColor: cat.color }}
                   />
-                  <span className="text-xs font-medium px-2 py-0.5 rounded-full surface-card surface-card--subtle text-[var(--text-soft)] border border-[color-mix(in_srgb,var(--card-border)_70%,transparent)]">
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full surface-card surface-card--subtle text-(--text-soft) border border-[color-mix(in_srgb,var(--card-border)_70%,transparent)]">
                     {cardCount}
                   </span>
                 </div>
-                <p className="font-medium truncate text-[var(--text-strong)] pr-5">{cat.name}</p>
-                <p className="text-xs text-[var(--text-soft)] mt-1">
+                <p className="font-medium truncate text-(--text-strong) pr-5">{cat.name}</p>
+                <p className="text-xs text-(--text-soft) mt-1">
                   {cardCount} card{cardCount === 1 ? '' : 's'}
                 </p>
               </button>
@@ -386,11 +386,11 @@ export default function CategoriesPage() {
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold font-brand text-[var(--text-strong)]">
+            <h1 className="text-3xl font-bold font-brand text-(--text-strong)">
               Categories
             </h1>
             <div className="h-1 w-16 rounded-full mt-2" style={{ backgroundColor: 'var(--accent-primary)' }} />
-            <p className="text-[var(--text-soft)] mt-3">
+            <p className="text-(--text-soft) mt-3">
               Manage your board columns
             </p>
           </div>
@@ -417,10 +417,10 @@ export default function CategoriesPage() {
         {showCreateForm && (
           <div className="glass glass--dense rounded-3xl p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-[var(--text-strong)]">Create New Category</h2>
+              <h2 className="text-lg font-semibold text-(--text-strong)">Create New Category</h2>
               <button
                 onClick={() => { setShowCreateForm(false); setNewCatName(''); setCreateError(''); }}
-                className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-[color-mix(in_srgb,var(--card-border)_30%,transparent)] text-[var(--text-soft)] transition-colors"
+                className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-[color-mix(in_srgb,var(--card-border)_30%,transparent)] text-(--text-soft) transition-colors"
                 aria-label="Close"
               >
                 <XMarkIcon className="w-4 h-4" />
@@ -430,7 +430,7 @@ export default function CategoriesPage() {
             <div className="space-y-4">
               {/* Category Name */}
               <div>
-                <label className="block text-sm font-medium text-[var(--text-soft)] mb-1.5">
+                <label className="block text-sm font-medium text-(--text-soft) mb-1.5">
                   Category Name
                 </label>
                 <input
@@ -440,7 +440,7 @@ export default function CategoriesPage() {
                   onKeyDown={(e) => { if (e.key === 'Enter') handleCreateCategory(); }}
                   placeholder="e.g. Frontend, Backend, DevOps…"
                   maxLength={32}
-                  className="w-full px-3 py-2 rounded-xl text-sm bg-[color-mix(in_srgb,var(--surface-base)_60%,transparent)] border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] text-[var(--text-strong)] placeholder:text-[var(--text-soft)] focus:outline-none focus:border-[color-mix(in_srgb,var(--accent-primary)_60%,transparent)] transition-colors"
+                  className="w-full px-3 py-2 rounded-xl text-sm bg-[color-mix(in_srgb,var(--surface-base)_60%,transparent)] border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] text-(--text-strong) placeholder:text-(--text-soft) focus:outline-none focus:border-[color-mix(in_srgb,var(--accent-primary)_60%,transparent)] transition-colors"
                   autoFocus
                 />
                 {createError && (
@@ -450,7 +450,7 @@ export default function CategoriesPage() {
 
               {/* Color Picker */}
               <div>
-                <label className="block text-sm font-medium text-[var(--text-soft)] mb-2">
+                <label className="block text-sm font-medium text-(--text-soft) mb-2">
                   Color
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -471,7 +471,7 @@ export default function CategoriesPage() {
                 </div>
                 {/* Preview */}
                 <div className="mt-3 flex items-center gap-2">
-                  <span className="text-xs text-[var(--text-soft)]">Preview:</span>
+                  <span className="text-xs text-(--text-soft)">Preview:</span>
                   <span
                     className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium"
                     style={{
@@ -515,7 +515,7 @@ export default function CategoriesPage() {
                 </button>
                 <button
                   onClick={() => { setShowCreateForm(false); setNewCatName(''); setCreateError(''); }}
-                  className="px-4 py-2 rounded-xl text-sm font-medium text-[var(--text-soft)] hover:text-[var(--text-strong)] transition-colors border border-[color-mix(in_srgb,var(--card-border)_60%,transparent)] hover:border-[color-mix(in_srgb,var(--card-border)_100%,transparent)]"
+                  className="px-4 py-2 rounded-xl text-sm font-medium text-(--text-soft) hover:text-(--text-strong) transition-colors border border-[color-mix(in_srgb,var(--card-border)_60%,transparent)] hover:border-[color-mix(in_srgb,var(--card-border)_100%,transparent)]"
                 >
                   Cancel
                 </button>
@@ -535,8 +535,8 @@ export default function CategoriesPage() {
                 <FolderIcon className="w-6 h-6" style={{ color: statPalette.total }} />
               </div>
               <div>
-                <p className="text-2xl font-bold text-[var(--text-strong)]">{stats.totalCategories}</p>
-                <p className="text-sm text-[var(--text-soft)]">Categories</p>
+                <p className="text-2xl font-bold text-(--text-strong)">{stats.totalCategories}</p>
+                <p className="text-sm text-(--text-soft)">Categories</p>
               </div>
             </div>
           </div>
@@ -550,8 +550,8 @@ export default function CategoriesPage() {
                 <Squares2X2Icon className="w-6 h-6" style={{ color: statPalette.cards }} />
               </div>
               <div>
-                <p className="text-2xl font-bold text-[var(--text-strong)]">{stats.totalCards}</p>
-                <p className="text-sm text-[var(--text-soft)]">Total Cards</p>
+                <p className="text-2xl font-bold text-(--text-strong)">{stats.totalCards}</p>
+                <p className="text-sm text-(--text-soft)">Total Cards</p>
               </div>
             </div>
           </div>
@@ -565,8 +565,8 @@ export default function CategoriesPage() {
                 📊
               </div>
               <div>
-                <p className="text-2xl font-bold text-[var(--text-strong)]">{stats.avgPerCat}</p>
-                <p className="text-sm text-[var(--text-soft)]">Avg per Category</p>
+                <p className="text-2xl font-bold text-(--text-strong)">{stats.avgPerCat}</p>
+                <p className="text-sm text-(--text-soft)">Avg per Category</p>
               </div>
             </div>
           </div>
@@ -580,7 +580,7 @@ export default function CategoriesPage() {
             </h2>
             {categories.length > 1 && (
               <div className="flex items-center gap-2">
-                <span className="text-sm text-[var(--text-soft)]">Sort by:</span>
+                <span className="text-sm text-(--text-soft)">Sort by:</span>
                 <button
                   onClick={() => setSortBy('name')}
                   className={cn(
@@ -647,7 +647,7 @@ export default function CategoriesPage() {
               </h2>
               <button
                 onClick={() => setSelectedCategory(null)}
-                className="text-sm flex items-center gap-1 text-[var(--text-soft)] hover:text-[var(--text-strong)] transition-colors"
+                className="text-sm flex items-center gap-1 text-(--text-soft) hover:text-(--text-strong) transition-colors"
               >
                 <XMarkIcon className="w-4 h-4" />
                 Clear
@@ -656,7 +656,7 @@ export default function CategoriesPage() {
 
             {selectedCategoryData.cards.length === 0 ? (
               <div className="glass glass--dense rounded-3xl p-12 text-center">
-                <p className="text-[var(--text-soft)]">No cards in this category</p>
+                <p className="text-(--text-soft)">No cards in this category</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

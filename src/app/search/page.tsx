@@ -134,8 +134,8 @@ export default function SearchPage() {
             className="w-16 h-16 mx-auto"
             style={{ color: 'color-mix(in srgb, var(--icon-3) 45%, transparent)' }}
           />
-          <h3 className="text-xl font-semibold text-[var(--text-strong)]">No results found</h3>
-          <p className="text-[var(--text-soft)]">
+          <h3 className="text-xl font-semibold text-(--text-strong)">No results found</h3>
+          <p className="text-(--text-soft)">
             {searchQuery || selectedTags.length > 0
               ? 'Try adjusting your search or filters'
               : 'Start searching to find your cards'}
@@ -174,9 +174,9 @@ export default function SearchPage() {
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold font-brand text-[var(--text-strong)]">Search</h1>
+          <h1 className="text-3xl font-bold font-brand text-(--text-strong)">Search</h1>
           <div className="h-1 w-16 rounded-full mt-2" style={{ backgroundColor: 'var(--accent-primary)' }} />
-          <p className="text-[var(--text-soft)] mt-3">
+          <p className="text-(--text-soft) mt-3">
             Find cards, snippets, commands, and docs instantly.
           </p>
         </div>
@@ -201,7 +201,7 @@ export default function SearchPage() {
 
           {/* Search Type Filters */}
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm text-[var(--text-soft)]">Search in:</span>
+            <span className="text-sm text-(--text-soft)">Search in:</span>
             {(['all', 'title', 'content', 'tags'] as const).map((type) => (
               <button
                 key={type}
@@ -266,7 +266,7 @@ export default function SearchPage() {
         {/* Results Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-[var(--text-strong)]">
+            <h2 className="text-xl font-semibold text-(--text-strong)">
               {renderResultsHeader()}
             </h2>
             {(searchQuery || selectedTags.length > 0) && (

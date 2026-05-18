@@ -529,7 +529,7 @@ bytebox/
 - Client-side navigation preserves React state and theme settings across page transitions
 - Sidebar transitions between a user-configurable expanded width (240–460px, default 240px) and 96px collapsed width
 - **Logo Switching**:
-  - Expanded: Shows full `logo_banner.png` (240×120)
+  - Expanded: Shows `icon.png` and "ByteBox" text
   - Collapsed: Shows square `icon.png` (48×48)
   - Both logos use a stable React `key` strategy to avoid visual rendering artifacts during appearance updates
 - **Sidebar Button**:

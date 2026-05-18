@@ -128,7 +128,7 @@ function SortableCategoryColumn({
           {/* Drag handle */}
           <button
             type="button"
-            className="p-1 rounded cursor-grab opacity-20 group-hover:opacity-70 hover:!opacity-100 transition-opacity text-(--text-soft) hover:text-(--text-strong) shrink-0 touch-none"
+            className="p-1 rounded cursor-grab opacity-20 group-hover:opacity-70 hover:opacity-100! transition-opacity text-(--text-soft) hover:text-(--text-strong) shrink-0 touch-none"
             aria-label="Drag to reorder column"
             title="Drag to reorder column"
             {...attributes}
@@ -185,7 +185,7 @@ function SortableCategoryColumn({
                 <span className="text-sm font-medium text-red-400 truncate">Delete &ldquo;{category.name}&rdquo;?</span>
               </div>
             ) : (
-              <h2 className="font-semibold text-(--text-strong) text-dynamic-category-title line-clamp-2 break-words flex items-center gap-2">
+              <h2 className="font-semibold text-(--text-strong) text-dynamic-category-title line-clamp-2 wrap-break-word flex items-center gap-2">
                 <span
                   className="w-2.5 h-2.5 rounded-full shrink-0"
                   style={{ backgroundColor: category.color }}

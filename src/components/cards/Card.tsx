@@ -193,7 +193,7 @@ export function Card({ card, onClick, onStarToggle, className }: Readonly<CardPr
       <div className="flex items-start justify-between gap-3 mb-2 relative z-10 pointer-events-none">
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <Icon className="w-5 h-5 shrink-0" style={{ color: iconColor }} />
-          <h3 className="font-semibold text-(--text-strong) text-dynamic-card-title line-clamp-2 break-words group-hover:text-accent transition-colors">
+          <h3 className="font-semibold text-(--text-strong) text-dynamic-card-title line-clamp-2 wrap-break-word group-hover:text-accent transition-colors">
             {card.title}
           </h3>
         </div>

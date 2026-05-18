@@ -42,7 +42,7 @@ export function CategoryColumn({
         }}
       >
         <div className="flex-1 min-w-0">
-          <h2 className="font-semibold text-foreground text-dynamic-category-title line-clamp-2 break-words flex items-center gap-2">
+          <h2 className="font-semibold text-foreground text-dynamic-category-title line-clamp-2 wrap-break-word flex items-center gap-2">
             <span
               className="w-3 h-3 rounded-full shrink-0"
               style={{ backgroundColor: category.color }}

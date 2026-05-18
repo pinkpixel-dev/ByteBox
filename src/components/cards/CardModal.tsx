@@ -292,7 +292,7 @@ export function CardModal({ card, isOpen, onClose, onDelete, onUpdate, allTags =
               id="edit-category"
               value={editCategoryId}
               onChange={(e) => setEditCategoryId(e.target.value)}
-              className="w-full rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 bg-[color-mix(in_srgb,var(--surface-card)_90%,transparent)] text-(--text-strong) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] [&>option]:bg-[var(--surface-card)] [&>option]:text-[var(--text-strong)]"
+              className="w-full rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 bg-[color-mix(in_srgb,var(--surface-card)_90%,transparent)] text-(--text-strong) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] [&>option]:bg-(--surface-card) [&>option]:text-(--text-strong)"
             >
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
@@ -350,7 +350,7 @@ export function CardModal({ card, isOpen, onClose, onDelete, onUpdate, allTags =
               id="edit-language"
               value={editLanguage}
               onChange={(e) => setEditLanguage(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg bg-[color-mix(in_srgb,var(--surface-card)_80%,transparent)] border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] text-(--text-strong) [&>option]:bg-[var(--surface-card)] [&>option]:text-[var(--text-strong)]"
+              className="w-full px-3 py-2 rounded-lg bg-[color-mix(in_srgb,var(--surface-card)_80%,transparent)] border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] text-(--text-strong) [&>option]:bg-(--surface-card) [&>option]:text-(--text-strong)"
             >
               {LANGUAGE_OPTIONS.map((lang) => (
                 <option key={lang.value} value={lang.value}>{lang.label}</option>

@@ -6,12 +6,12 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'ByteBox Docs',
+			title: 'ByteBox',
 			description: 'Official documentation for ByteBox: setup, operation, concepts, and API behavior.',
 			logo: {
-				src: './src/assets/logo_banner.png',
+				src: './src/assets/icon.png',
 				alt: 'ByteBox',
-				replacesTitle: true,
+				replacesTitle: false,
 			},
 			favicon: '/favicon.png',
 			customCss: ['./src/styles/bytebox-docs.css'],

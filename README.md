@@ -1,4 +1,4 @@
-![ByteBox Logo](./public/logo_banner.png)
+![ByteBox Logo](./public/icon.png)
 
 > A **lightweight web dashboard** for developer resources — your personal dev toolkit in one beautiful place.
 

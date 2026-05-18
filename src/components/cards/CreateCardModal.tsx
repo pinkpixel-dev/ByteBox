@@ -346,7 +346,7 @@ export default function CreateCardModal({
                           setContent('');
                           resetFileState();
                         }}
-                        className="w-full rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 bg-[color-mix(in_srgb,var(--surface-card)_90%,transparent)] text-(--text-strong) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] [&>option]:bg-[var(--surface-card)] [&>option]:text-[var(--text-strong)]"
+                        className="w-full rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 bg-[color-mix(in_srgb,var(--surface-card)_90%,transparent)] text-(--text-strong) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] [&>option]:bg-(--surface-card) [&>option]:text-(--text-strong)"
                       >
                         {['bookmark', 'snippet', 'command', 'doc', 'image', 'note'].map((t) => (
                           <option key={t} value={t}>
@@ -363,7 +363,7 @@ export default function CreateCardModal({
                         id="card-category"
                         value={categoryId}
                         onChange={(e) => setCategoryId(e.target.value)}
-                        className="w-full rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 bg-[color-mix(in_srgb,var(--surface-card)_90%,transparent)] text-(--text-strong) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] [&>option]:bg-[var(--surface-card)] [&>option]:text-[var(--text-strong)]"
+                        className="w-full rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 bg-[color-mix(in_srgb,var(--surface-card)_90%,transparent)] text-(--text-strong) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] [&>option]:bg-(--surface-card) [&>option]:text-(--text-strong)"
                       >
                         {categories.map((c) => (
                           <option key={c.id} value={c.id}>{c.name}</option>
@@ -401,7 +401,7 @@ export default function CreateCardModal({
                         id="card-language"
                         value={language}
                         onChange={(e) => setLanguage(e.target.value)}
-                        className="w-full rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 bg-[color-mix(in_srgb,var(--surface-card)_90%,transparent)] text-(--text-strong) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] [&>option]:bg-[var(--surface-card)] [&>option]:text-[var(--text-strong)]"
+                        className="w-full rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 bg-[color-mix(in_srgb,var(--surface-card)_90%,transparent)] text-(--text-strong) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] [&>option]:bg-(--surface-card) [&>option]:text-(--text-strong)"
                       >
                         {LANGUAGE_OPTIONS.map((lang) => (
                           <option key={lang.value} value={lang.value}>{lang.label}</option>
@@ -450,7 +450,7 @@ export default function CreateCardModal({
 
                   {/* Footer */}
                   <div className="flex items-center justify-end gap-2 pt-3 border-t border-[color-mix(in_srgb,var(--card-border)_80%,transparent)]">
-                    <button type="button" onClick={onClose} className="px-4 py-2 rounded-lg border text-[var(--text-soft)] hover:text-[var(--text-strong)] transition-colors">
+                    <button type="button" onClick={onClose} className="px-4 py-2 rounded-lg border text-(--text-soft) hover:text-(--text-strong) transition-colors">
                       Cancel
                     </button>
                     <button 
