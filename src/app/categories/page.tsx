@@ -330,9 +330,19 @@ export default function CategoriesPage() {
                     <button
                       onClick={() => handleSaveEdit(cat.id)}
                       disabled={!editName.trim()}
-                      className="px-3 py-1.5 rounded-lg text-xs font-medium accent-gradient disabled:opacity-50"
+                      className="group relative px-3 py-1.5 rounded-[20px] text-xs font-medium disabled:opacity-50 overflow-hidden transition-all duration-300 ease-out bg-[color-mix(in_srgb,var(--background)_90%,transparent)] border border-transparent hover:scale-[1.03] active:scale-95"
                     >
-                      Save
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                        <div
+                          className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                          style={{
+                            backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                            backgroundSize: '200%',
+                          }}
+                        />
+                      </div>
+                      <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                      <span className="relative" style={{ color: 'var(--accent-primary)' }}>Save</span>
                     </button>
                     <button
                       onClick={() => setEditingId(null)}
@@ -386,15 +396,20 @@ export default function CategoriesPage() {
           </div>
           <button
             onClick={() => { setShowCreateForm(true); setCreateError(''); }}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all mt-1"
-            style={{
-              backgroundColor: 'color-mix(in srgb, var(--accent-primary) 20%, transparent)',
-              color: 'var(--accent-primary)',
-              border: '1px solid color-mix(in srgb, var(--accent-primary) 40%, transparent)',
-            }}
+            className="group relative flex items-center gap-2 px-4 py-2 rounded-[20px] text-sm font-medium transition-all duration-300 ease-out mt-1 overflow-hidden bg-[color-mix(in_srgb,var(--background)_90%,transparent)] border border-transparent hover:scale-[1.03] active:scale-95"
           >
-            <PlusIcon className="w-4 h-4" />
-            New Category
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md">
+              <div
+                className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                style={{
+                  backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                  backgroundSize: '200%',
+                }}
+              />
+            </div>
+            <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+            <PlusIcon className="relative w-4 h-4 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_var(--accent-primary)]" style={{ color: 'var(--accent-primary)' }} />
+            <span className="relative" style={{ color: 'var(--accent-primary)' }}>New Category</span>
           </button>
         </div>
 
@@ -476,21 +491,27 @@ export default function CategoriesPage() {
                 <button
                   onClick={handleCreateCategory}
                   disabled={creating}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all disabled:opacity-50"
-                  style={{
-                    backgroundColor: 'var(--accent-primary)',
-                    color: '#fff',
-                  }}
+                  className="group relative flex items-center gap-2 px-4 py-2 rounded-[20px] text-sm font-medium transition-all duration-300 ease-out disabled:opacity-50 overflow-hidden bg-[color-mix(in_srgb,var(--background)_90%,transparent)] border border-transparent hover:scale-[1.03] active:scale-95"
                 >
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                    <div
+                      className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                      style={{
+                        backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                        backgroundSize: '200%',
+                      }}
+                    />
+                  </div>
+                  <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
                   {creating ? (
                     <div
-                      className="w-4 h-4 border-2 rounded-full animate-spin"
-                      style={{ borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#fff' }}
+                      className="relative w-4 h-4 border-2 rounded-full animate-spin"
+                      style={{ borderColor: 'rgba(255,255,255,0.3)', borderTopColor: 'var(--accent-primary)' }}
                     />
                   ) : (
-                    <PlusIcon className="w-4 h-4" />
+                    <PlusIcon className="relative w-4 h-4 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_var(--accent-primary)]" style={{ color: 'var(--accent-primary)' }} />
                   )}
-                  Create Category
+                  <span className="relative" style={{ color: 'var(--accent-primary)' }}>Create Category</span>
                 </button>
                 <button
                   onClick={() => { setShowCreateForm(false); setNewCatName(''); setCreateError(''); }}
@@ -563,24 +584,52 @@ export default function CategoriesPage() {
                 <button
                   onClick={() => setSortBy('name')}
                   className={cn(
-                    'px-3 py-1.5 rounded-lg text-sm font-medium transition-all border',
+                    'group relative px-3 py-1.5 rounded-[20px] text-sm font-medium transition-all duration-300 ease-out border border-transparent overflow-hidden',
                     sortBy === 'name'
-                      ? 'accent-glow-active'
+                      ? 'bg-[color-mix(in_srgb,var(--background)_90%,transparent)] hover:scale-[1.03] active:scale-95'
                       : 'surface-card surface-card--subtle border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]'
                   )}
                 >
-                  Name
+                  {sortBy === 'name' && (
+                    <>
+                      <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                        <div
+                          className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                          style={{
+                            backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                            backgroundSize: '200%',
+                          }}
+                        />
+                      </div>
+                      <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                    </>
+                  )}
+                  <span className="relative" style={sortBy === 'name' ? { color: 'var(--accent-primary)' } : undefined}>Name</span>
                 </button>
                 <button
                   onClick={() => setSortBy('count')}
                   className={cn(
-                    'px-3 py-1.5 rounded-lg text-sm font-medium transition-all border',
+                    'group relative px-3 py-1.5 rounded-[20px] text-sm font-medium transition-all duration-300 ease-out border border-transparent overflow-hidden',
                     sortBy === 'count'
-                      ? 'accent-glow-active'
+                      ? 'bg-[color-mix(in_srgb,var(--background)_90%,transparent)] hover:scale-[1.03] active:scale-95'
                       : 'surface-card surface-card--subtle border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]'
                   )}
                 >
-                  Cards
+                  {sortBy === 'count' && (
+                    <>
+                      <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                        <div
+                          className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                          style={{
+                            backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                            backgroundSize: '200%',
+                          }}
+                        />
+                      </div>
+                      <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                    </>
+                  )}
+                  <span className="relative" style={sortBy === 'count' ? { color: 'var(--accent-primary)' } : undefined}>Cards</span>
                 </button>
               </div>
             )}

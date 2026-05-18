@@ -162,12 +162,25 @@ export function Card({ card, onClick, onStarToggle, className }: Readonly<CardPr
     <>
       <div
         className={cn(
-          'group relative glass glass--dense rounded-2xl p-4 transition-all duration-200 w-full',
-          'hover:-translate-y-1 hover:shadow-[0_28px_70px_color-mix(in_srgb,var(--accent-primary)_18%,transparent)]',
+          'group relative glass glass--dense rounded-2xl p-4 transition-all duration-300 ease-out w-full overflow-hidden',
+          'hover:scale-[1.02] active:scale-[0.98]',
           'border border-transparent',
           className
         )}
       >
+      {/* Hover gradient shine effect */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md pointer-events-none">
+        <div
+          className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+          style={{
+            backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+            backgroundSize: '200%',
+          }}
+        />
+      </div>
+      {/* Inner plate */}
+      <div className="absolute inset-[1.5px] rounded-[calc(1rem-1.5px)] bg-[color-mix(in_srgb,var(--glass-bg)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--glass-bg)_80%,transparent)] pointer-events-none" />
+      
       {/* Clickable backdrop button - covers the card for click handling */}
       <button
         type="button"
@@ -254,11 +267,6 @@ export function Card({ card, onClick, onStarToggle, className }: Readonly<CardPr
           ))}
         </div>
       )}
-
-      {/* Hover Gradient Border Effect */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-        <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_top,var(--accent-soft),transparent_65%)]" />
-      </div>
     </div>
 
     {/* Lightbox for image cards */}

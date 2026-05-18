@@ -209,7 +209,7 @@ export function FilterPanel({
                 transition-all duration-200
                 ${
                   isSelected
-                    ? 'accent-glow-active shadow-lg shadow-[color-mix(in_srgb,var(--accent-primary)_20%,transparent)]'
+                    ? 'accent-glow-active'
                     : 'surface-card surface-card--subtle text-(--foreground-soft) hover:text-(--foreground) border border-[color-mix(in_srgb,var(--card-border)_90%,transparent)] hover:border-[color-mix(in_srgb,var(--accent-border)_40%,transparent)]'
                 }
               `}

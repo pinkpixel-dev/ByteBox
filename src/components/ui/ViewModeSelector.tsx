@@ -25,7 +25,7 @@ interface ViewModeOption {
   id: ViewMode;
   name: string;
   description: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   shortcut: string;
 }
 
@@ -71,27 +71,34 @@ interface MenuItemButtonProps {
 function MenuItemButton({ option, isActive, isFocused, onSelect }: Readonly<MenuItemButtonProps>) {
   const Icon = option.icon;
 
-  const getBackgroundColor = () => {
-    if (isActive) return 'color-mix(in srgb, var(--accent-primary) 12%, transparent)';
-    if (isFocused) return 'rgba(148, 163, 184, 0.12)';
-    return 'transparent';
-  };
-
   return (
     <button
       onClick={() => onSelect(option.id)}
       className={cn(
-        "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-150",
-        isActive && "border",
+        "group relative w-full flex items-center gap-3 px-3 py-2.5 rounded-[20px] text-left transition-all duration-300 ease-out overflow-hidden",
+        "bg-[color-mix(in_srgb,var(--background)_90%,transparent)]",
+        isActive && "border border-transparent",
+        !isActive && isFocused && "scale-[1.02]"
       )}
-      style={{
-        backgroundColor: getBackgroundColor(),
-        borderColor: isActive ? 'color-mix(in srgb, var(--accent-primary) 40%, transparent)' : 'transparent',
-        boxShadow: isActive ? '0 0 12px 2px color-mix(in srgb, var(--accent-primary) 18%, transparent)' : 'none',
-      }}
     >
+      {/* Hover/Active gradient shine effect */}
+      {(isActive || isFocused) && (
+        <>
+          <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+            <div
+              className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+              style={{
+                backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                backgroundSize: '200%',
+              }}
+            />
+          </div>
+          <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+        </>
+      )}
+
       <div
-        className="p-1.5 rounded-lg transition-colors"
+        className="relative p-1.5 rounded-lg transition-all duration-300"
         style={{
           backgroundColor: isActive
             ? 'color-mix(in srgb, var(--accent-primary) 12%, transparent)'
@@ -103,18 +110,19 @@ function MenuItemButton({ option, isActive, isFocused, onSelect }: Readonly<Menu
         ) : (
           <Icon
             className={cn(
-              "w-4 h-4",
-              isActive
-                ? "text-[var(--accent-primary)]"
-                : "text-[rgba(248,250,252,0.7)]"
+              "w-4 h-4 transition-all duration-300",
+              isActive && "scale-110 drop-shadow-[0_0_10px_var(--accent-primary)]"
             )}
+            style={{
+              color: isActive ? 'var(--accent-primary)' : 'rgba(248,250,252,0.7)'
+            }}
           />
         )}
       </div>
 
-      <div className="flex-1 min-w-0">
+      <div className="relative flex-1 min-w-0">
         <p
-          className="text-sm font-medium"
+          className="text-sm font-medium transition-colors duration-300"
           style={{
             color: isActive ? 'var(--accent-primary)' : '#f8fafc',
           }}
@@ -130,13 +138,13 @@ function MenuItemButton({ option, isActive, isFocused, onSelect }: Readonly<Menu
       </div>
 
       <kbd
-        className="px-1.5 py-0.5 rounded text-[10px] font-mono"
+        className="relative px-1.5 py-0.5 rounded text-[10px] font-mono"
         style={{
           backgroundColor: 'rgba(148, 163, 184, 0.15)',
           color: 'rgba(248, 250, 252, 0.7)',
         }}
       >
-        ⌘{option.shortcut}
+        Cmd/Ctrl+{option.shortcut}
       </kbd>
     </button>
   );
@@ -205,11 +213,13 @@ export function ViewModeSelector({
                     top: `${(document.querySelector('[data-viewmode-button]') as HTMLElement)?.getBoundingClientRect().bottom + 8 || 0}px`,
                     left: `${(document.querySelector('[data-viewmode-button]') as HTMLElement)?.getBoundingClientRect().left || 0}px`,
                     width: '256px',
-                    backgroundColor: '#0f172a',
-                    border: '1px solid rgba(148, 163, 184, 0.32)',
+                    backgroundColor: 'color-mix(in srgb, var(--background-muted) 50%, transparent)',
+                    backdropFilter: 'blur(24px)',
+                    WebkitBackdropFilter: 'blur(24px)',
+                    border: '1px solid color-mix(in srgb, var(--glass-border) 10%, transparent)',
                   }}
                 >
-                  <div className="p-2 relative" style={{ backgroundColor: '#0f172a', color: '#f8fafc' }}>
+                  <div className="p-2 relative" style={{ color: '#f8fafc' }}>
                     <div className="px-3 py-2 mb-1">
                       <p
                         className="text-xs font-medium uppercase tracking-wider"
@@ -241,8 +251,10 @@ export function ViewModeSelector({
                   <div
                     className="border-t px-4 py-2"
                     style={{
-                      backgroundColor: 'rgba(15, 23, 42, 0.98)',
-                      borderTopColor: 'rgba(148, 163, 184, 0.32)',
+                      backgroundColor: 'color-mix(in srgb, var(--background-muted) 50%, transparent)',
+                      backdropFilter: 'blur(24px)',
+                      WebkitBackdropFilter: 'blur(24px)',
+                      borderTopColor: 'color-mix(in srgb, var(--glass-border) 10%, transparent)',
                     }}
                   >
                     <p
@@ -254,7 +266,7 @@ export function ViewModeSelector({
                         className="px-1 py-0.5 rounded font-mono"
                         style={{ backgroundColor: 'rgba(148, 163, 184, 0.15)' }}
                       >
-                        ⌘1-4
+                        Cmd/Ctrl+1-4
                       </kbd>{" "}
                       to switch views
                     </p>

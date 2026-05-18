@@ -99,7 +99,7 @@ export function ExportImport() {
   };
 
   const tileBase =
-    'group flex items-center justify-between gap-4 rounded-2xl px-4 py-2.5 text-left transition-all border disabled:opacity-50 disabled:cursor-not-allowed';
+    'sidebar-hover-effect group flex items-center justify-between gap-4 rounded-2xl px-4 py-2.5 text-left transition-all border disabled:opacity-50 disabled:cursor-not-allowed';
 
   return (
     <div className="space-y-5">
@@ -118,8 +118,7 @@ export function ExportImport() {
           className={cn(
             tileBase,
             'border-[color-mix(in_srgb,var(--card-border)_70%,transparent)]',
-            'bg-[color-mix(in_srgb,var(--background)_22%,transparent)]',
-            'hover:border-[color-mix(in_srgb,var(--accent-border)_40%,transparent)] hover:bg-[color-mix(in_srgb,var(--background)_30%,transparent)]'
+            'bg-[color-mix(in_srgb,var(--background)_90%,transparent)]'
           )}
         >
           <div className="flex items-center gap-3">
@@ -127,7 +126,7 @@ export function ExportImport() {
               <ArrowDownTrayIcon className="w-5 h-5 text-(--text-soft) group-hover:text-(--text-strong) transition-colors" />
             </span>
             <div className="flex flex-col">
-              <span className="text-sm font-semibold text-(--text-strong)">
+              <span className="text-sm font-semibold text-(--text-strong) transition-colors group-hover:text-[var(--accent-primary)]">
                 {exporting ? 'Preparing export…' : 'Export Data'}
               </span>
               <span className="text-xs text-(--text-soft)">
@@ -146,16 +145,16 @@ export function ExportImport() {
           disabled={importing}
           className={cn(
             tileBase,
-            'border-[color-mix(in_srgb,var(--accent-border)_40%,transparent)] bg-[color-mix(in_srgb,var(--accent-soft)_65%,transparent)]',
-            'shadow-[0_14px_45px_color-mix(in_srgb,var(--accent-primary)_28%,transparent)] hover:shadow-[0_18px_55px_color-mix(in_srgb,var(--accent-primary)_38%,transparent)]'
+            'border-[color-mix(in_srgb,var(--card-border)_70%,transparent)]',
+            'bg-[color-mix(in_srgb,var(--background)_90%,transparent)]'
           )}
         >
           <div className="flex items-center gap-3">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[color-mix(in_srgb,var(--accent-primary)_25%,transparent)] border border-[color-mix(in_srgb,var(--accent-border)_50%,transparent)]">
-              <ArrowUpTrayIcon className="w-5 h-5 text-white" />
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[color-mix(in_srgb,var(--background)_35%,transparent)] border border-[color-mix(in_srgb,var(--card-border)_60%,transparent)]">
+              <ArrowUpTrayIcon className="w-5 h-5 text-(--text-soft) group-hover:text-(--text-strong) transition-colors" />
             </span>
             <div className="flex flex-col">
-              <span className="text-sm font-semibold text-(--text-strong)">
+              <span className="text-sm font-semibold text-(--text-strong) transition-colors group-hover:text-[var(--accent-primary)]">
                 {importing ? 'Importing backup…' : 'Import Data'}
               </span>
               <span className="text-xs text-(--text-soft)">
@@ -163,7 +162,7 @@ export function ExportImport() {
               </span>
             </div>
           </div>
-          <span className="text-xs uppercase tracking-widest text-(--text-soft) group-hover:text-(--text-strong)">
+          <span className="text-xs uppercase tracking-widest text-(--text-soft) group-hover:text-accent">
             Upload
           </span>
         </button>

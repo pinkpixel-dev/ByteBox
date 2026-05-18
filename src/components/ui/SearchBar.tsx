@@ -41,15 +41,34 @@ export function SearchBar({ onSearch, placeholder = 'Search cards...', className
     <div className={`relative ${className}`}>
       <div
         className={`
-          flex items-center gap-2 px-4 py-2 rounded-xl
-          surface-card surface-card--subtle
-          transition-all duration-200
-          ${isFocused
-            ? 'ring-2 ring-[color-mix(in_srgb,var(--accent-primary)_45%,transparent)] border-[color-mix(in_srgb,var(--accent-border)_70%,transparent)] shadow-[0_10px_30px_rgba(15,23,42,0.28)]'
-            : 'hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]'}
+          group relative flex items-center gap-2 px-4 py-2 rounded-[20px]
+          bg-[color-mix(in_srgb,var(--background)_90%,transparent)]
+          overflow-hidden
+          transition-all duration-300 ease-out
+          border border-transparent
+          ${isFocused ? 'scale-[1.02]' : ''}
         `}
       >
-        <MagnifyingGlassIcon className="w-5 h-5" style={{ color: 'var(--icon-2)' }} />
+        {/* Hover/Focus gradient shine effect */}
+        <div className={`absolute inset-0 transition-opacity duration-500 backdrop-blur-md ${isFocused ? 'opacity-70' : 'opacity-0 group-hover:opacity-70'}`}>
+          <div
+            className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+            style={{
+              backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+              backgroundSize: '200%',
+            }}
+          />
+        </div>
+        {/* Inner plate */}
+        <div className={`absolute inset-[1.5px] rounded-[18.5px] transition-colors duration-300 pointer-events-none ${isFocused ? 'bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)]' : 'bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)]'}`} />
+        
+        <MagnifyingGlassIcon 
+          className="relative w-5 h-5 transition-all duration-300" 
+          style={{ 
+            color: isFocused ? 'var(--accent-primary)' : 'var(--icon-2)',
+            filter: isFocused ? 'drop-shadow(0 0 10px var(--accent-primary))' : 'none'
+          }} 
+        />
         <input
           id="search-input"
           type="text"
@@ -58,21 +77,21 @@ export function SearchBar({ onSearch, placeholder = 'Search cards...', className
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
-          className="flex-1 bg-transparent text-(--foreground) placeholder:text-gray-500 outline-none"
+          className="relative flex-1 bg-transparent text-(--foreground) placeholder:text-gray-500 outline-none"
         />
         {query && (
           <button
             onClick={handleClear}
-            className="p-1 rounded hover:bg-(--hover-bg) transition-colors"
+            className="relative p-1 rounded hover:bg-(--hover-bg) transition-colors z-10"
             aria-label="Clear search"
           >
             <XMarkIcon className="w-4 h-4 text-gray-400" />
           </button>
         )}
         <kbd
-          className="hidden sm:inline-block px-2 py-0.5 text-xs rounded bg-(--hover-bg) text-gray-400 border border-(--card-border)"
+          className="relative hidden sm:inline-block px-2 py-0.5 text-xs rounded bg-(--hover-bg) text-gray-400 border border-(--card-border)"
         >
-          ⌘K
+          ⌘/Ctrl+K
         </kbd>
       </div>
     </div>

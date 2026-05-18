@@ -450,11 +450,25 @@ export default function CreateCardModal({
 
                   {/* Footer */}
                   <div className="flex items-center justify-end gap-2 pt-3 border-t border-[color-mix(in_srgb,var(--card-border)_80%,transparent)]">
-                    <button type="button" onClick={onClose} className="px-4 py-2 rounded-lg border">
+                    <button type="button" onClick={onClose} className="px-4 py-2 rounded-lg border text-[var(--text-soft)] hover:text-[var(--text-strong)] transition-colors">
                       Cancel
                     </button>
-                    <button type="submit" disabled={isSubmitting} className="px-4 py-2 rounded-lg accent-gradient font-medium disabled:opacity-60">
-                      {isSubmitting ? 'Creating...' : 'Create Card'}
+                    <button 
+                      type="submit" 
+                      disabled={isSubmitting} 
+                      className="group relative px-4 py-2 rounded-[20px] font-medium disabled:opacity-60 overflow-hidden transition-all duration-300 ease-out bg-[color-mix(in_srgb,var(--background)_90%,transparent)] border border-transparent hover:scale-[1.03] active:scale-95"
+                    >
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                        <div
+                          className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                          style={{
+                            backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                            backgroundSize: '200%',
+                          }}
+                        />
+                      </div>
+                      <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                      <span className="relative" style={{ color: 'var(--accent-primary)' }}>{isSubmitting ? 'Creating...' : 'Create Card'}</span>
                     </button>
                   </div>
                 </form>

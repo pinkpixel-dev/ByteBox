@@ -175,6 +175,14 @@ body::before {
 
 
 
+.glass-header {
+  background: color-mix(in srgb, var(--background-muted) 50%, transparent);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid color-mix(in srgb, var(--glass-border) 10%, transparent);
+  box-shadow: 0 30px 120px rgba(0, 0, 0, 0.4);
+}
+
 .glass {
   background: color-mix(in srgb, var(--glass-bg) 75%, transparent);
   backdrop-filter: blur(var(--glass-blur));
@@ -208,6 +216,63 @@ body::before {
 
 .surface-card--subtle {
   background: color-mix(in srgb, var(--card-bg) 70%, transparent);
+}
+
+.sidebar-hover-effect {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease-out, border-color 0.3s ease-out, background-color 0.3s ease-out, color 0.3s ease-out;
+}
+
+.sidebar-hover-effect::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background-image: repeating-linear-gradient(
+    125deg,
+    transparent 0%,
+    transparent 15%,
+    color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%,
+    transparent 35%,
+    transparent 50%
+  );
+  background-size: 200%;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.sidebar-hover-effect::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: color-mix(in srgb, var(--background-muted) 95%, transparent);
+  pointer-events: none;
+}
+
+.sidebar-hover-effect:hover::before {
+  opacity: 0.7;
+}
+
+.sidebar-hover-effect:hover::after {
+  opacity: 1;
+}
+
+.sidebar-hover-effect:hover {
+  transform: scale(1.03);
+}
+
+.sidebar-hover-effect:active {
+  transform: scale(0.98);
+}
+
+.sidebar-hover-effect > * {
+  position: relative;
+  z-index: 1;
 }
 
 .text-accent {
@@ -244,13 +309,13 @@ input.glass-range {
 
 input.glass-range:hover {
   border-color: color-mix(in srgb, var(--accent-border) 50%, transparent);
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent-primary) 25%, transparent);
+  box-shadow: none;
 }
 
 input.glass-range:focus-visible {
   outline: none;
   border-color: color-mix(in srgb, var(--accent-border) 70%, transparent);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-primary) 18%, transparent);
+  box-shadow: none;
 }
 
 input.glass-range::-webkit-slider-runnable-track {
@@ -267,7 +332,7 @@ input.glass-range::-webkit-slider-thumb {
   border-radius: 50%;
   background: var(--accent-primary);
   border: 2px solid color-mix(in srgb, var(--background) 70%, transparent);
-  box-shadow: 0 12px 28px color-mix(in srgb, var(--accent-primary) 35%, transparent);
+  box-shadow: none;
   transition: transform 0.2s ease;
   margin-top: -8px;
 }
@@ -288,7 +353,7 @@ input.glass-range::-moz-range-thumb {
   border-radius: 50%;
   background: var(--accent-primary);
   border: 2px solid color-mix(in srgb, var(--background) 70%, transparent);
-  box-shadow: 0 12px 28px color-mix(in srgb, var(--accent-primary) 35%, transparent);
+  box-shadow: none;
   transition: transform 0.2s ease;
 }
 
@@ -349,14 +414,14 @@ select option:checked {
 
 /* Active/selected neon glow state for toggle buttons */
 .accent-glow-active {
-  background: color-mix(in srgb, var(--accent-primary) 12%, var(--glass-bg));
-  color: var(--accent-primary);
-  border: 1px solid color-mix(in srgb, var(--accent-primary) 40%, transparent) !important;
-  box-shadow: 0 0 12px 2px color-mix(in srgb, var(--accent-primary) 20%, transparent);
+  background: color-mix(in srgb, var(--background-muted) 95%, transparent);
+  color: var(--foreground);
+  border: 1px solid color-mix(in srgb, var(--card-border) 80%, transparent) !important;
+  box-shadow: none;
 }
 
 .accent-glow-active:hover {
-  box-shadow: 0 0 18px 4px color-mix(in srgb, var(--accent-primary) 28%, transparent);
+  box-shadow: none;
 }
 
 /* Enhanced Button Animations */

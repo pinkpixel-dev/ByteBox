@@ -207,13 +207,29 @@ export default function SearchPage() {
                 key={type}
                 onClick={() => setSearchType(type)}
                 className={cn(
-                  'px-3 py-1.5 rounded-lg text-sm font-medium transition-all border',
+                  'group relative px-3 py-1.5 rounded-[20px] text-sm font-medium transition-all duration-300 ease-out border border-transparent overflow-hidden',
                   searchType === type
-                    ? 'accent-glow-active'
+                    ? 'bg-[color-mix(in_srgb,var(--background)_90%,transparent)] hover:scale-[1.03] active:scale-95'
                     : 'surface-card surface-card--subtle border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]'
                 )}
               >
-                {type.charAt(0).toUpperCase() + type.slice(1)}
+                {searchType === type && (
+                  <>
+                    <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                      <div
+                        className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                        style={{
+                          backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                          backgroundSize: '200%',
+                        }}
+                      />
+                    </div>
+                    <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                  </>
+                )}
+                <span className="relative" style={searchType === type ? { color: 'var(--accent-primary)' } : undefined}>
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
+                </span>
               </button>
             ))}
           </div>

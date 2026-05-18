@@ -171,7 +171,7 @@ export function AppLayout({
       {/* Sidebar */}
       <aside
         className={cn(
-          'glass glass--dense relative flex flex-col border border-transparent rounded-r-3xl',
+          'glass-header relative flex flex-col border border-transparent rounded-r-3xl',
           isSidebarResizing ? 'select-none' : '',
           sidebarOpen
             ? isSidebarResizing
@@ -183,7 +183,7 @@ export function AppLayout({
       >
         {/* Sidebar Header */}
         <div className={cn(
-          "flex items-center py-4 glass-bar",
+          "flex items-center py-4 border-b border-white/10",
           sidebarOpen ? "justify-between px-4" : "flex-col gap-2 px-2"
         )}>
           {/* Logo: Show banner when expanded, icon when collapsed - Clickable to collapse/expand */}
@@ -241,14 +241,30 @@ export function AppLayout({
           <button
             onClick={handleAddCardClick}
             className={cn(
-              'w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl',
-              'accent-gradient',
-              'hover:scale-[1.02] active:scale-[0.98]',
-              'font-semibold text-dynamic-ui transition-all duration-300'
+              'group relative w-full flex items-center justify-center gap-2 px-4 py-3 rounded-[20px]',
+              'bg-[color-mix(in_srgb,var(--background)_90%,transparent)]',
+              'overflow-hidden',
+              'hover:scale-[1.03] active:scale-95',
+              'font-semibold text-dynamic-ui transition-all duration-300 ease-out'
             )}
           >
-            <PlusIcon className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" />
-            {sidebarOpen && <span>Add Card</span>}
+            {/* Hover gradient border effect */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md">
+              <div
+                className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                style={{
+                  backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                  backgroundSize: '200%',
+                }}
+              />
+            </div>
+            {/* Inner plate */}
+            <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+            {/* Content */}
+            <div className="relative flex items-center justify-center gap-2">
+              <PlusIcon className="w-5 h-5 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_var(--accent-primary)]" style={{ color: 'var(--accent-primary)' }} />
+              {sidebarOpen && <span className="transition-colors duration-300" style={{ color: 'var(--accent-primary)' }}>Add Card</span>}
+            </div>
           </button>
         </div>
 
@@ -262,31 +278,52 @@ export function AppLayout({
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  'group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 border border-transparent',
-                  'hover:bg-[color-mix(in_srgb,var(--hover-bg)_80%,transparent)] hover:border-[color-mix(in_srgb,var(--accent-border)_40%,transparent)]',
-                  'hover:shadow-lg hover:shadow-[color-mix(in_srgb,var(--accent-primary)_10%,transparent)]',
-                  'hover:translate-x-1 active:scale-[0.98]',
+                  'group relative flex items-center gap-3 px-4 py-3 rounded-[20px] overflow-hidden transition-all duration-300 ease-out border border-transparent',
+                  'bg-[color-mix(in_srgb,var(--background)_90%,transparent)]',
+                  'hover:scale-[1.03] active:scale-95',
                   item.active &&
-                    'bg-accent-soft/80 border-[color-mix(in_srgb,var(--accent-border)_70%,transparent)] shadow-[0_12px_35px_rgba(0,0,0,0.18)]'
+                    'bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)]'
                 )}
               >
-                <Icon
-                  className={cn(
-                    'w-6 h-6 shrink-0 transition-all duration-300',
-                    item.active ? 'scale-110' : 'group-hover:scale-110 group-hover:rotate-3'
-                  )}
-                  style={{ color: item.active ? iconColor : 'var(--foreground-soft)' }}
-                />
-                {sidebarOpen && (
-                  <span
-                    className={cn(
-                      'text-dynamic-ui font-medium transition-all duration-300',
-                      item.active ? 'text-accent' : 'text-(--foreground-soft) group-hover:text-(--foreground)'
-                    )}
-                  >
-                    {item.name}
-                  </span>
+                {/* Hover gradient effect */}
+                {!item.active && (
+                  <>
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                      <div
+                        className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                        style={{
+                          backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                          backgroundSize: '200%',
+                        }}
+                      />
+                    </div>
+                    <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                  </>
                 )}
+                {/* Content */}
+                <div className="relative flex items-center gap-3 w-full">
+                  <Icon
+                    className={cn(
+                      'w-6 h-6 shrink-0 transition-all duration-300',
+                      item.active ? 'scale-110' : 'group-hover:scale-110'
+                    )}
+                    style={{
+                      color: item.active ? iconColor : 'var(--foreground-soft)',
+                      filter: item.active ? 'none' : undefined
+                    }}
+                  />
+                  {sidebarOpen && (
+                    <span
+                      className={cn(
+                        'text-dynamic-ui font-medium transition-all duration-300',
+                        item.active ? '' : 'group-hover:text-[var(--accent-primary)]'
+                      )}
+                      style={{ color: item.active ? iconColor : undefined }}
+                    >
+                      {item.name}
+                    </span>
+                  )}
+                </div>
               </Link>
             );
           })}
@@ -331,7 +368,7 @@ export function AppLayout({
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden px-6 py-5 gap-4">
         {/* Header */}
-        <header className="glass glass--dense h-16 rounded-2xl flex items-center justify-between px-6 shadow-[0_18px_46px_rgba(5,6,11,0.35)]">
+        <header className="glass-header h-16 rounded-2xl flex items-center justify-between px-6">
           <div className="flex items-center gap-4">
             <Link
               href="/"
@@ -369,11 +406,10 @@ export function AppLayout({
               <button
                 onClick={onToggleStarred}
                 className={cn(
-                  'p-2 rounded-xl transition-all duration-300 relative',
-                  'hover:scale-110 active:scale-95',
+                  'sidebar-hover-effect w-9 h-9 flex items-center justify-center rounded-full transition-all duration-300 relative',
                   showStarredOnly
                     ? 'bg-amber-500/10 border border-amber-400/40 shadow-[0_0_12px_rgba(251,191,36,0.2)]'
-                    : 'surface-card surface-card--subtle hover:border-amber-400/30 hover:shadow-lg hover:shadow-amber-400/10'
+                    : 'surface-card surface-card--subtle'
                 )}
                 aria-label={showStarredOnly ? 'Show all cards' : 'Show starred only'}
                 title={`${showStarredOnly ? 'Show all cards' : 'Show starred only'} (${starredCount} starred) — ⌘3`}
@@ -401,7 +437,7 @@ export function AppLayout({
             {showFiltersToggle && onToggleFilters && (
               <button
                 onClick={onToggleFilters}
-                className="p-2 rounded-xl surface-card surface-card--subtle transition-all duration-300 hover:border-[color-mix(in_srgb,var(--accent-primary)_40%,transparent)] hover:scale-110 active:scale-95 hover:shadow-[0_0_16px_3px_color-mix(in_srgb,var(--accent-primary)_25%,transparent)]"
+                className="sidebar-hover-effect w-9 h-9 flex items-center justify-center rounded-full surface-card surface-card--subtle transition-all duration-300 relative"
                 aria-label="Toggle filters"
               >
                 <FunnelIcon className="w-5 h-5" />
@@ -413,11 +449,21 @@ export function AppLayout({
               href="https://bytebox.pro"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-xl surface-card surface-card--subtle transition-all duration-300 hover:border-[color-mix(in_srgb,var(--accent-primary)_40%,transparent)] hover:scale-110 active:scale-95 hover:shadow-[0_0_16px_3px_color-mix(in_srgb,var(--accent-primary)_25%,transparent)]"
+              className="group relative p-2 rounded-xl overflow-hidden transition-all duration-300 ease-out hover:scale-110 active:scale-95 bg-[color-mix(in_srgb,var(--background)_90%,transparent)] border border-transparent"
               aria-label="Documentation"
               title="Documentation & Help"
             >
-              <BookOpenIcon className="w-5 h-5 text-(--foreground-soft) hover:text-(--foreground) transition-colors duration-300" />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                <div
+                  className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                  style={{
+                    backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                    backgroundSize: '200%',
+                  }}
+                />
+              </div>
+              <div className="absolute inset-[1.5px] rounded-[10.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+              <BookOpenIcon className="relative w-5 h-5 text-(--foreground-soft) group-hover:text-[var(--accent-primary)] transition-colors duration-300" />
             </a>
 
             {/* Pink Pixel Button */}
@@ -425,11 +471,21 @@ export function AppLayout({
               href="https://pinkpixel.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-xl surface-card surface-card--subtle transition-all duration-300 hover:border-pink-500/40 hover:scale-110 active:scale-95 hover:shadow-[0_0_16px_3px_rgba(236,72,153,0.25)]"
+              className="group relative p-2 rounded-xl overflow-hidden transition-all duration-300 ease-out hover:scale-110 active:scale-95 bg-[color-mix(in_srgb,var(--background)_90%,transparent)] border border-transparent"
               aria-label="Pink Pixel"
               title="Visit Pink Pixel"
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                <div
+                  className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                  style={{
+                    backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                    backgroundSize: '200%',
+                  }}
+                />
+              </div>
+              <div className="absolute inset-[1.5px] rounded-[10.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+              <svg className="relative w-5 h-5 transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="url(#pinkGradient)"/>
                 <defs>
                   <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -445,11 +501,21 @@ export function AppLayout({
               href="https://github.com/pinkpixel-dev/ByteBox"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-xl surface-card surface-card--subtle transition-all duration-300 hover:border-[color-mix(in_srgb,var(--accent-primary)_40%,transparent)] hover:scale-110 active:scale-95 hover:shadow-[0_0_16px_3px_color-mix(in_srgb,var(--accent-primary)_25%,transparent)]"
+              className="group relative p-2 rounded-xl overflow-hidden transition-all duration-300 ease-out hover:scale-110 active:scale-95 bg-[color-mix(in_srgb,var(--background)_90%,transparent)] border border-transparent"
               aria-label="GitHub Repository"
               title="View on GitHub"
             >
-              <svg className="w-5 h-5 text-(--foreground-soft) hover:text-(--foreground) transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                <div
+                  className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                  style={{
+                    backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                    backgroundSize: '200%',
+                  }}
+                />
+              </div>
+              <div className="absolute inset-[1.5px] rounded-[10.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+              <svg className="relative w-5 h-5 text-(--foreground-soft) group-hover:text-[var(--accent-primary)] transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
               </svg>
             </a>

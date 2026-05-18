@@ -6,9 +6,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, Fragment } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { ExportImport } from '@/components/ui/ExportImport';
 import { useTheme } from '@/contexts/ThemeContext';
 import {
@@ -32,8 +31,10 @@ import {
   CheckIcon,
   XMarkIcon,
   SwatchIcon,
+  ChevronDownIcon,
 } from '@heroicons/react/24/outline';
 import { cn } from '@/lib/utils';
+import { Listbox, ListboxButton, ListboxOptions, ListboxOption, Transition } from '@headlessui/react';
 
 export default function SettingsPage() {
   const {
@@ -342,7 +343,6 @@ export default function SettingsPage() {
               <h2 className="text-xl font-semibold text-(--text-strong)">🎨 Appearance</h2>
               <p className="text-sm text-(--text-soft)">Colors, icons, and wallpaper options</p>
             </div>
-            <ThemeToggle />
           </div>
 
           <div className="space-y-5">
@@ -403,19 +403,33 @@ export default function SettingsPage() {
                       key={theme.id}
                       onClick={() => setAccentTheme(theme.id)}
                       className={cn(
-                        'group rounded-2xl p-4 text-left transition-all border flex flex-col gap-3',
+                        'group rounded-2xl p-4 text-left transition-all duration-300 ease-out border flex flex-col gap-3 overflow-hidden relative',
                         'surface-card surface-card--subtle hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]',
-                        isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)] shadow-[0_18px_60px_color-mix(in_srgb,var(--accent-primary)_25%,transparent)]'
+                        isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)]'
                       )}
                     >
-                      <div className="flex items-center justify-between gap-3">
+                      {isActive && (
+                        <>
+                          <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                            <div
+                              className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                              style={{
+                                backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                                backgroundSize: '200%',
+                              }}
+                            />
+                          </div>
+                          <div className="absolute inset-[1.5px] rounded-[calc(1rem-1.5px)] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                        </>
+                      )}
+                      <div className="relative flex items-center justify-between gap-3">
                         <div>
                           <p className="font-medium text-(--text-strong)">{theme.name}</p>
                           <p className="text-xs text-(--text-soft)">{theme.description}</p>
                         </div>
                         <ArrowUpTrayIcon className={cn('w-5 h-5 transition-opacity', isActive ? 'opacity-100 text-accent' : 'opacity-0 group-hover:opacity-70')} />
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="relative flex items-center gap-2">
                         {theme.palette.slice(0, 6).map((color: string, index: number) => (
                           <span
                             key={color + index}
@@ -442,7 +456,7 @@ export default function SettingsPage() {
                 </div>
                 <button
                   onClick={() => setIsCreatingTheme((v) => !v)}
-                  className="px-3 py-2 text-sm rounded-lg surface-card surface-card--subtle border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)] transition-all flex items-center gap-2"
+                  className="sidebar-hover-effect group px-3 py-2 text-sm rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) group-hover:text-[var(--accent-primary)]"
                 >
                   <PlusIcon className="w-4 h-4" />
                   {isCreatingTheme ? 'Close builder' : 'New custom theme'}
@@ -491,7 +505,7 @@ export default function SettingsPage() {
                       {newThemeColors.length < 6 && (
                         <button
                           onClick={handleAddThemeColor}
-                          className="h-12 px-4 rounded-xl border border-dashed border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] hover:border-[color-mix(in_srgb,var(--accent-border)_60%,transparent)] text-sm text-(--text-soft) flex items-center gap-2"
+                          className="sidebar-hover-effect group h-12 px-4 rounded-xl border border-dashed border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-sm text-(--foreground-soft) flex items-center gap-2 group-hover:text-[var(--accent-primary)]"
                         >
                           <PlusIcon className="w-4 h-4" />
                           Add color
@@ -573,19 +587,33 @@ export default function SettingsPage() {
                       key={theme.id}
                       onClick={() => setIconTheme(theme.id)}
                       className={cn(
-                        'group rounded-2xl p-4 text-left transition-all border flex flex-col gap-3',
+                        'group rounded-2xl p-4 text-left transition-all duration-300 ease-out border flex flex-col gap-3 overflow-hidden relative',
                         'surface-card surface-card--subtle hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]',
-                        isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)] shadow-[0_18px_60px_color-mix(in_srgb,var(--accent-primary)_25%,transparent)]'
+                        isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)]'
                       )}
                     >
-                      <div className="flex items-center justify-between gap-3">
+                      {isActive && (
+                        <>
+                          <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                            <div
+                              className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                              style={{
+                                backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                                backgroundSize: '200%',
+                              }}
+                            />
+                          </div>
+                          <div className="absolute inset-[1.5px] rounded-[calc(1rem-1.5px)] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                        </>
+                      )}
+                      <div className="relative flex items-center justify-between gap-3">
                         <div>
                           <p className="font-medium text-(--text-strong)">{theme.name}</p>
                           <p className="text-xs text-(--text-soft)">{theme.description}</p>
                         </div>
                         <ArrowDownTrayIcon className={cn('w-5 h-5 transition-opacity', isActive ? 'opacity-100 text-accent' : 'opacity-0 group-hover:opacity-70')} />
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="relative flex items-center gap-2">
                         {palette.slice(0, 6).map((color: string, index: number) => (
                           <span
                             key={color + index}
@@ -648,18 +676,28 @@ export default function SettingsPage() {
                     />
                     <button
                       onClick={() => handleSetSolidBackground(solidBackground)}
-                      className="px-3 py-2 rounded-lg bg-[color-mix(in_srgb,var(--accent-primary)_85%,transparent)] text-white text-sm shadow-[0_10px_28px_color-mix(in_srgb,var(--accent-primary)_32%,transparent)]"
+                      className="group relative flex items-center justify-center gap-2 px-4 py-2.5 rounded-[20px] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] overflow-hidden hover:scale-[1.03] active:scale-95 font-semibold text-sm text-dynamic-ui transition-all duration-300 ease-out"
                     >
-                      Apply solid
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                        <div
+                          className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                          style={{
+                            backgroundImage:
+                              'repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)',
+                            backgroundSize: '200%',
+                          }}
+                        />
+                      </div>
+                      <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                      <span className="relative" style={{ color: 'var(--accent-primary)' }}>Apply solid</span>
                     </button>
                     <button
                       onClick={handleSaveSolidColor}
                       disabled={!normalizeHexColor(solidBackground) || savedSolidColors.includes((normalizeHexColor(solidBackground) || '').toLowerCase())}
                       className={cn(
-                        'px-3 py-2 rounded-lg surface-card surface-card--subtle border text-sm transition-all',
-                        'border-[color-mix(in_srgb,var(--card-border)_80%,transparent)]',
+                        'sidebar-hover-effect group px-3 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) group-hover:text-[var(--accent-primary)]',
                         normalizeHexColor(solidBackground) && !savedSolidColors.includes((normalizeHexColor(solidBackground) || '').toLowerCase())
-                          ? 'hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]'
+                          ? ''
                           : 'opacity-60 cursor-not-allowed'
                       )}
                     >
@@ -669,10 +707,8 @@ export default function SettingsPage() {
                       onClick={handleResetBackground}
                       disabled={!hasCustomBackground}
                       className={cn(
-                        'px-3 py-2 rounded-lg surface-card surface-card--subtle border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] text-sm transition-all',
-                        hasCustomBackground
-                          ? 'hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]'
-                          : 'opacity-60 cursor-not-allowed'
+                        'sidebar-hover-effect group px-3 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) group-hover:text-[var(--accent-primary)]',
+                        hasCustomBackground ? '' : 'opacity-60 cursor-not-allowed'
                       )}
                     >
                       Reset to default
@@ -691,13 +727,27 @@ export default function SettingsPage() {
                             key={preset.id}
                             onClick={() => handleApplySavedSolidColor(preset.color)}
                             className={cn(
-                              'group relative rounded-lg border p-1.5 transition-all text-left',
+                              'group relative rounded-lg border p-1.5 transition-all text-left overflow-hidden',
                               'surface-card surface-card--subtle hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]',
-                              isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)] shadow-[0_10px_25px_color-mix(in_srgb,var(--accent-primary)_25%,transparent)]'
+                              isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)]'
                             )}
                             title={preset.name}
                           >
-                            <span className="block h-8 rounded-md border border-white/10" style={{ backgroundColor: preset.color }} />
+                            {isActive && (
+                              <>
+                                <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                                  <div
+                                    className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                                    style={{
+                                      backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                                      backgroundSize: '200%',
+                                    }}
+                                  />
+                                </div>
+                                <div className="absolute inset-[1.5px] rounded-[calc(0.5rem-1.5px)] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                              </>
+                            )}
+                            <span className="relative block h-8 rounded-md border border-white/10" style={{ backgroundColor: preset.color }} />
                           </button>
                         );
                       })}
@@ -710,13 +760,27 @@ export default function SettingsPage() {
                             <button
                               onClick={() => handleApplySavedSolidColor(color)}
                               className={cn(
-                                'w-full rounded-lg border p-1.5 transition-all',
+                                'w-full rounded-lg border p-1.5 transition-all overflow-hidden relative',
                                 'surface-card surface-card--subtle hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]',
-                                isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)] shadow-[0_10px_25px_color-mix(in_srgb,var(--accent-primary)_25%,transparent)]'
+                                isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)]'
                               )}
                               title={`${color} (saved)`}
                             >
-                              <span className="block h-8 rounded-md border border-white/10" style={{ backgroundColor: color }} />
+                              {isActive && (
+                                <>
+                                  <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                                    <div
+                                      className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                                      style={{
+                                        backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                                        backgroundSize: '200%',
+                                      }}
+                                    />
+                                  </div>
+                                  <div className="absolute inset-[1.5px] rounded-[calc(0.5rem-1.5px)] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 pointer-events-none" />
+                                </>
+                              )}
+                              <span className="relative block h-8 rounded-md border border-white/10" style={{ backgroundColor: color }} />
                             </button>
                             <button
                               onClick={(event) => {
@@ -773,7 +837,7 @@ export default function SettingsPage() {
                     {customGradientColors.length < 4 && (
                       <button
                         onClick={handleAddGradientColor}
-                        className="h-12 px-4 rounded-xl border border-dashed border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] hover:border-[color-mix(in_srgb,var(--accent-border)_60%,transparent)] text-sm text-(--text-soft) flex items-center gap-2"
+                        className="sidebar-hover-effect group h-12 px-4 rounded-xl border border-dashed border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-sm text-(--foreground-soft) flex items-center gap-2 group-hover:text-[var(--accent-primary)]"
                       >
                         <PlusIcon className="w-4 h-4" />
                         Add color
@@ -798,16 +862,27 @@ export default function SettingsPage() {
                   <div className="flex gap-2 flex-wrap">
                     <button
                       onClick={handleApplyCustomGradient}
-                      className="px-4 py-2 rounded-lg bg-[color-mix(in_srgb,var(--accent-primary)_85%,transparent)] text-white text-sm font-semibold shadow-[0_12px_35px_color-mix(in_srgb,var(--accent-primary)_38%,transparent)]"
+                      className="group relative flex items-center justify-center gap-2 px-4 py-2.5 rounded-[20px] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] overflow-hidden hover:scale-[1.03] active:scale-95 font-semibold text-sm text-dynamic-ui transition-all duration-300 ease-out"
                     >
-                      Apply custom gradient
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                        <div
+                          className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                          style={{
+                            backgroundImage:
+                              'repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)',
+                            backgroundSize: '200%',
+                          }}
+                        />
+                      </div>
+                      <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                      <span className="relative" style={{ color: 'var(--accent-primary)' }}>Apply custom gradient</span>
                     </button>
                     <button
                       onClick={() => {
                         setCustomGradientColors(['#1a1a2e', '#16213e']);
                         setCustomGradientAngle(135);
                       }}
-                      className="px-4 py-2 rounded-lg surface-card surface-card--subtle border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] text-sm"
+                      className="sidebar-hover-effect group px-4 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) group-hover:text-[var(--accent-primary)]"
                     >
                       Reset gradient editor
                     </button>
@@ -824,7 +899,7 @@ export default function SettingsPage() {
                     />
                     <button
                       onClick={handleSaveCustomGradientPreset}
-                      className="px-4 py-2 rounded-lg surface-card surface-card--subtle border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)] text-sm transition-all"
+                      className="sidebar-hover-effect group px-4 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) group-hover:text-[var(--accent-primary)]"
                     >
                       Save gradient
                     </button>
@@ -844,13 +919,27 @@ export default function SettingsPage() {
                               <button
                                 onClick={() => handleApplySavedGradientPreset(preset)}
                                 className={cn(
-                                  'w-full rounded-xl p-3 border text-left transition-all',
+                                  'w-full rounded-xl p-3 border text-left transition-all overflow-hidden relative',
                                   'surface-card surface-card--subtle hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]',
-                                  isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)] shadow-[0_12px_40px_color-mix(in_srgb,var(--accent-primary)_22%,transparent)]'
+                                  isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)]'
                                 )}
                                 style={{ backgroundImage: `linear-gradient(${preset.angle}deg, ${preset.colors.join(', ')})` }}
                               >
-                                <div className="flex items-center justify-between gap-2">
+                                {isActive && (
+                                  <>
+                                    <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                                      <div
+                                        className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                                        style={{
+                                          backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                                          backgroundSize: '200%',
+                                        }}
+                                      />
+                                    </div>
+                                    <div className="absolute inset-[1.5px] rounded-[calc(0.75rem-1.5px)] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 pointer-events-none" />
+                                  </>
+                                )}
+                                <div className="relative flex items-center justify-between gap-2">
                                   <div>
                                     <p className="font-medium text-(--text-strong)">{preset.name}</p>
                                     <p className="text-[11px] text-(--text-soft)">{preset.colors.length}-color blend</p>
@@ -890,13 +979,27 @@ export default function SettingsPage() {
                             key={preset.id}
                             onClick={() => handleApplyGradient(preset)}
                             className={cn(
-                              'rounded-xl p-3 border text-left transition-all',
+                              'rounded-xl p-3 border text-left transition-all overflow-hidden relative',
                               'surface-card surface-card--subtle hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]',
-                              isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)] shadow-[0_12px_40px_color-mix(in_srgb,var(--accent-primary)_22%,transparent)]'
+                              isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)]'
                             )}
                             style={{ backgroundImage: `linear-gradient(${preset.angle}deg, ${preset.colors.join(', ')})` }}
                           >
-                            <div className="flex items-center justify-between gap-2">
+                            {isActive && (
+                              <>
+                                <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                                  <div
+                                    className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                                    style={{
+                                      backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                                      backgroundSize: '200%',
+                                    }}
+                                  />
+                                </div>
+                                <div className="absolute inset-[1.5px] rounded-[calc(0.75rem-1.5px)] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 pointer-events-none" />
+                              </>
+                            )}
+                            <div className="relative flex items-center justify-between gap-2">
                               <div>
                                 <p className="font-medium text-(--text-strong)">{preset.name}</p>
                                 <p className="text-[11px] text-(--text-soft)">{preset.colors.length}-color blend</p>
@@ -926,20 +1029,34 @@ export default function SettingsPage() {
                         key={wallpaper.id}
                         onClick={() => handleSelectPresetWallpaper(wallpaper)}
                         className={cn(
-                          'rounded-2xl p-3 border text-left transition-all flex flex-col gap-2',
+                          'rounded-2xl p-3 border text-left transition-all flex flex-col gap-2 overflow-hidden relative',
                           'surface-card surface-card--subtle hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]',
-                          isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)] shadow-[0_14px_40px_color-mix(in_srgb,var(--accent-primary)_22%,transparent)]'
+                          isActive && 'border-[color-mix(in_srgb,var(--accent-border)_80%,transparent)]'
                         )}
                       >
+                        {isActive && (
+                          <>
+                            <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                              <div
+                                className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                                style={{
+                                  backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                                  backgroundSize: '200%',
+                                }}
+                              />
+                            </div>
+                            <div className="absolute inset-[1.5px] rounded-[calc(1rem-1.5px)] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 pointer-events-none" />
+                          </>
+                        )}
                         <div
-                          className="h-24 rounded-xl border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)]"
-                          style={{ 
+                          className="relative h-24 rounded-xl border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)]"
+                          style={{
                             background: wallpaper.preview,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                           }}
                         />
-                        <div className="flex items-center justify-between gap-2">
+                        <div className="relative flex items-center justify-between gap-2">
                           <div>
                             <p className="font-medium text-(--text-strong)">{wallpaper.name}</p>
                             <p className="text-[11px] text-(--text-soft)">Built-in</p>
@@ -954,7 +1071,7 @@ export default function SettingsPage() {
                 <div className="flex flex-wrap items-center gap-4">
                   <button
                     onClick={() => wallpaperInputRef.current?.click()}
-                    className="px-4 py-2.5 rounded-xl surface-card surface-card--subtle border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)] transition-all flex items-center gap-2"
+                    className="sidebar-hover-effect group px-4 py-2.5 rounded-xl border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) group-hover:text-[var(--accent-primary)]"
                     disabled={wallpaperUploading}
                   >
                     <PhotoIcon className="w-5 h-5" />
@@ -965,10 +1082,8 @@ export default function SettingsPage() {
                     onClick={handleResetBackground}
                     disabled={!hasCustomBackground || wallpaperUploading}
                     className={cn(
-                      'px-4 py-2.5 rounded-xl surface-card surface-card--subtle border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] transition-all flex items-center gap-2',
-                      hasCustomBackground
-                        ? 'hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)]'
-                        : 'opacity-60 cursor-not-allowed'
+                      'sidebar-hover-effect group px-4 py-2.5 rounded-xl border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) group-hover:text-[var(--accent-primary)]',
+                      hasCustomBackground ? '' : 'opacity-60 cursor-not-allowed'
                     )}
                   >
                     <TrashIcon className="w-5 h-5" />
@@ -1009,18 +1124,83 @@ export default function SettingsPage() {
                     <p className="font-medium text-(--text-strong)">UI font</p>
                     <span className="text-[11px] text-(--text-soft)">Applied globally</span>
                   </div>
-                  <select
-                    value={fontConfig.uiFont}
-                    onChange={(event) => updateFontConfig({ uiFont: event.target.value })}
-                    className="w-full rounded-lg bg-transparent border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 text-sm focus:border-[color-mix(in_srgb,var(--accent-border)_60%,transparent)] outline-none"
-                    aria-label="Select UI font"
-                  >
-                    {availableFonts.map((font) => (
-                      <option key={font.id} value={font.id} className="bg-[color-mix(in_srgb,var(--background)_90%,#000_10%)]">
-                        {font.name}
-                      </option>
-                    ))}
-                  </select>
+                  <Listbox value={fontConfig.uiFont} onChange={(value) => updateFontConfig({ uiFont: value })}>
+                    {({ open }) => (
+                      <div className="relative">
+                        <ListboxButton
+                          className="w-full flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition-all duration-200 border surface-card surface-card--subtle bg-[rgba(5,6,11,0.9)] hover:border-[color-mix(in_srgb,var(--accent-border)_40%,transparent)] focus:border-[color-mix(in_srgb,var(--accent-border)_60%,transparent)] outline-none"
+                          aria-label="Select UI font"
+                        >
+                          <span className="truncate">{availableFonts.find((f) => f.id === fontConfig.uiFont)?.name || 'Select font'}</span>
+                          <ChevronDownIcon className="w-4 h-4 ml-2 opacity-60 flex-shrink-0" />
+                        </ListboxButton>
+                        <Transition
+                          show={open}
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <ListboxOptions
+                            static
+                            className="absolute mt-2 w-full rounded-2xl focus:outline-none z-[9999] overflow-hidden shadow-[0_26px_70px_rgba(0,0,0,0.75)]"
+                            style={{
+                              backgroundColor: 'color-mix(in srgb, var(--background-muted) 50%, transparent)',
+                              backdropFilter: 'blur(24px)',
+                              WebkitBackdropFilter: 'blur(24px)',
+                              border: '1px solid color-mix(in srgb, var(--glass-border) 10%, transparent)',
+                            }}
+                          >
+                            <div className="p-2 relative max-h-60 overflow-y-auto" style={{ color: '#f8fafc' }}>
+                              {availableFonts.map((font) => {
+                                const isActive = fontConfig.uiFont === font.id;
+                                return (
+                                  <ListboxOption key={font.id} value={font.id}>
+                                    {({ focus }) => (
+                                      <div
+                                        className={cn(
+                                          "group relative w-full flex items-center px-3 py-2.5 rounded-[20px] cursor-pointer text-left transition-all duration-300 ease-out overflow-hidden",
+                                          "bg-[color-mix(in_srgb,var(--background)_90%,transparent)]",
+                                          isActive && "border border-transparent",
+                                          !isActive && focus && "scale-[1.02]"
+                                        )}
+                                      >
+                                        {(isActive || focus) && (
+                                          <>
+                                            <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                                              <div
+                                                className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                                                style={{
+                                                  backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                                                  backgroundSize: '200%',
+                                                }}
+                                              />
+                                            </div>
+                                            <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                                          </>
+                                        )}
+                                        <div className="relative flex-1 min-w-0">
+                                          <p
+                                            className="text-sm font-medium transition-colors duration-300 truncate"
+                                            style={{ color: isActive ? 'var(--accent-primary)' : '#f8fafc' }}
+                                          >
+                                            {font.name}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </ListboxOption>
+                                );
+                              })}
+                            </div>
+                          </ListboxOptions>
+                        </Transition>
+                      </div>
+                    )}
+                  </Listbox>
                   <p
                     className="text-sm text-(--text-soft)"
                     style={{
@@ -1037,18 +1217,83 @@ export default function SettingsPage() {
                     <p className="font-medium text-(--text-strong)">Code blocks</p>
                     <span className="text-[11px] text-(--text-soft)">Mono font</span>
                   </div>
-                  <select
-                    value={fontConfig.monoFont}
-                    onChange={(event) => updateFontConfig({ monoFont: event.target.value })}
-                    className="w-full rounded-lg bg-transparent border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 text-sm focus:border-[color-mix(in_srgb,var(--accent-border)_60%,transparent)] outline-none"
-                    aria-label="Select monospace font for code blocks"
-                  >
-                    {availableMonoFonts.map((font) => (
-                      <option key={font.id} value={font.id} className="bg-[color-mix(in_srgb,var(--background)_90%,#000_10%)]">
-                        {font.name}
-                      </option>
-                    ))}
-                  </select>
+                  <Listbox value={fontConfig.monoFont} onChange={(value) => updateFontConfig({ monoFont: value })}>
+                    {({ open }) => (
+                      <div className="relative">
+                        <ListboxButton
+                          className="w-full flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition-all duration-200 border surface-card surface-card--subtle bg-[rgba(5,6,11,0.9)] hover:border-[color-mix(in_srgb,var(--accent-border)_40%,transparent)] focus:border-[color-mix(in_srgb,var(--accent-border)_60%,transparent)] outline-none"
+                          aria-label="Select monospace font for code blocks"
+                        >
+                          <span className="truncate">{availableMonoFonts.find((f) => f.id === fontConfig.monoFont)?.name || 'Select font'}</span>
+                          <ChevronDownIcon className="w-4 h-4 ml-2 opacity-60 flex-shrink-0" />
+                        </ListboxButton>
+                        <Transition
+                          show={open}
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <ListboxOptions
+                            static
+                            className="absolute mt-2 w-full rounded-2xl focus:outline-none z-[9999] overflow-hidden shadow-[0_26px_70px_rgba(0,0,0,0.75)]"
+                            style={{
+                              backgroundColor: 'color-mix(in srgb, var(--background-muted) 50%, transparent)',
+                              backdropFilter: 'blur(24px)',
+                              WebkitBackdropFilter: 'blur(24px)',
+                              border: '1px solid color-mix(in srgb, var(--glass-border) 10%, transparent)',
+                            }}
+                          >
+                            <div className="p-2 relative max-h-60 overflow-y-auto" style={{ color: '#f8fafc' }}>
+                              {availableMonoFonts.map((font) => {
+                                const isActive = fontConfig.monoFont === font.id;
+                                return (
+                                  <ListboxOption key={font.id} value={font.id}>
+                                    {({ focus }) => (
+                                      <div
+                                        className={cn(
+                                          "group relative w-full flex items-center px-3 py-2.5 rounded-[20px] cursor-pointer text-left transition-all duration-300 ease-out overflow-hidden",
+                                          "bg-[color-mix(in_srgb,var(--background)_90%,transparent)]",
+                                          isActive && "border border-transparent",
+                                          !isActive && focus && "scale-[1.02]"
+                                        )}
+                                      >
+                                        {(isActive || focus) && (
+                                          <>
+                                            <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                                              <div
+                                                className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                                                style={{
+                                                  backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                                                  backgroundSize: '200%',
+                                                }}
+                                              />
+                                            </div>
+                                            <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                                          </>
+                                        )}
+                                        <div className="relative flex-1 min-w-0">
+                                          <p
+                                            className="text-sm font-medium transition-colors duration-300 truncate"
+                                            style={{ color: isActive ? 'var(--accent-primary)' : '#f8fafc' }}
+                                          >
+                                            {font.name}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </ListboxOption>
+                                );
+                              })}
+                            </div>
+                          </ListboxOptions>
+                        </Transition>
+                      </div>
+                    )}
+                  </Listbox>
                   <p
                     className="text-sm text-(--text-soft)"
                     style={{
@@ -1216,7 +1461,7 @@ export default function SettingsPage() {
                 </div>
                 <button
                   onClick={() => setIsCreatingPreset((v) => !v)}
-                  className="px-3 py-2 text-sm rounded-lg surface-card surface-card--subtle border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] hover:border-[color-mix(in_srgb,var(--accent-border)_45%,transparent)] transition-all flex items-center gap-2"
+                  className="sidebar-hover-effect group px-3 py-2 text-sm rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) group-hover:text-[var(--accent-primary)]"
                 >
                   <PlusIcon className="w-4 h-4" />
                   {isCreatingPreset ? 'Close' : 'Save current as preset'}
