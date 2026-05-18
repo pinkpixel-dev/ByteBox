@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.5.2] - 2026-05-18
+
+### ✨ UI Refinements & Scroll Behavior
+
+#### Changed
+
+- **Star Button Refinement** — Removed the star count badge from the header's star button and adjusted its size to match the filter button (`w-[22px] h-[22px]`) for a cleaner header layout.
+- **Board Scrolling Behavior** — Adjusted `AppLayout` to prevent the entire page from scrolling when viewing the board. The horizontal category scrollbar is now always visible at the bottom of the viewport, eliminating the need to scroll vertically to reach it.
+
+---
+
 ## [2.5.1] - 2026-03-12
 
 ### 🪟 Windows Installer Release, Packaging Hardening & 2.5.x Rollup

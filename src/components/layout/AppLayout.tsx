@@ -42,6 +42,7 @@ interface AppLayoutProps {
   onViewModeChange?: (mode: ViewMode) => void;
   hasActiveFilters?: boolean;
   onClearFilters?: () => void;
+  disableScroll?: boolean;
 }
 
 export function AppLayout({
@@ -57,6 +58,7 @@ export function AppLayout({
   onViewModeChange,
   hasActiveFilters = false,
   onClearFilters,
+  disableScroll = false,
 }: Readonly<AppLayoutProps>) {
   const SIDEBAR_MIN_WIDTH = 240;
   const SIDEBAR_MAX_WIDTH = 460;
@@ -415,20 +417,9 @@ export function AppLayout({
                 title={`${showStarredOnly ? 'Show all cards' : 'Show starred only'} (${starredCount} starred) — ⌘3`}
               >
                 {showStarredOnly ? (
-                  <StarIconSolid className="w-5 h-5 text-amber-400" />
+                  <StarIconSolid className="w-[22px] h-[22px] text-amber-400" />
                 ) : (
-                  <StarIcon className="w-5 h-5 text-(--foreground-soft) hover:text-amber-400 transition-colors duration-300" />
-                )}
-                {starredCount > 0 && (
-                  <span className={cn(
-                    'absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center',
-                    'text-[10px] font-medium rounded-full px-1',
-                    showStarredOnly
-                      ? 'bg-amber-400 text-amber-950'
-                      : 'bg-(--hover-bg) text-(--foreground-soft)'
-                  )}>
-                    {starredCount}
-                  </span>
+                  <StarIcon className="w-[22px] h-[22px] text-(--foreground-soft) hover:text-amber-400 transition-colors duration-300" />
                 )}
               </button>
             )}
@@ -440,7 +431,7 @@ export function AppLayout({
                 className="sidebar-hover-effect w-9 h-9 flex items-center justify-center rounded-full surface-card surface-card--subtle transition-all duration-300 relative"
                 aria-label="Toggle filters"
               >
-                <FunnelIcon className="w-5 h-5" />
+                <FunnelIcon className="w-[22px] h-[22px]" />
               </button>
             )}
 
@@ -523,8 +514,10 @@ export function AppLayout({
         </header>
 
         {/* Content Area */}
-        <main className="flex-1 overflow-auto pr-1">
-          <div className="min-h-full pb-8">{children}</div>
+        <main className={cn("flex-1 pr-1 flex flex-col min-h-0", !disableScroll && "overflow-auto")}>
+          <div className={cn("flex-1 flex flex-col min-h-0", !disableScroll && "min-h-full pb-8")}>
+            {children}
+          </div>
         </main>
       </div>
 

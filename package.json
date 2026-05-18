@@ -7,7 +7,7 @@
     "url": "https://pinkpixel.dev"
   },
   "description": "A dashboard app for developers",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "type": "module",
   "main": "dist-electron/main.cjs",
   "include": [

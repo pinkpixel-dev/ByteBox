@@ -367,6 +367,7 @@ export default function Home() {
       onViewModeChange={setViewMode}
       hasActiveFilters={hasActiveFilters}
       onClearFilters={clearFilters}
+      disableScroll
     >
       <div className="flex gap-6 h-full">
         {/* Main Content */}
