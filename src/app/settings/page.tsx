@@ -456,7 +456,7 @@ export default function SettingsPage() {
                 </div>
                 <button
                   onClick={() => setIsCreatingTheme((v) => !v)}
-                  className="sidebar-hover-effect group px-3 py-2 text-sm rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) group-hover:text-[var(--accent-primary)]"
+                  className="sidebar-hover-effect group px-3 py-2 text-sm rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) hover:text-[var(--accent-primary)]"
                 >
                   <PlusIcon className="w-4 h-4" />
                   {isCreatingTheme ? 'Close builder' : 'New custom theme'}
@@ -505,7 +505,7 @@ export default function SettingsPage() {
                       {newThemeColors.length < 6 && (
                         <button
                           onClick={handleAddThemeColor}
-                          className="sidebar-hover-effect group h-12 px-4 rounded-xl border border-dashed border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-sm text-(--foreground-soft) flex items-center gap-2 group-hover:text-[var(--accent-primary)]"
+                          className="sidebar-hover-effect group h-12 px-4 rounded-xl border border-dashed border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-sm text-(--foreground-soft) flex items-center gap-2 hover:text-[var(--accent-primary)]"
                         >
                           <PlusIcon className="w-4 h-4" />
                           Add color
@@ -695,7 +695,7 @@ export default function SettingsPage() {
                       onClick={handleSaveSolidColor}
                       disabled={!normalizeHexColor(solidBackground) || savedSolidColors.includes((normalizeHexColor(solidBackground) || '').toLowerCase())}
                       className={cn(
-                        'sidebar-hover-effect group px-3 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) group-hover:text-[var(--accent-primary)]',
+                        'sidebar-hover-effect group px-3 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) hover:text-[var(--accent-primary)]',
                         normalizeHexColor(solidBackground) && !savedSolidColors.includes((normalizeHexColor(solidBackground) || '').toLowerCase())
                           ? ''
                           : 'opacity-60 cursor-not-allowed'
@@ -707,7 +707,7 @@ export default function SettingsPage() {
                       onClick={handleResetBackground}
                       disabled={!hasCustomBackground}
                       className={cn(
-                        'sidebar-hover-effect group px-3 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) group-hover:text-[var(--accent-primary)]',
+                        'sidebar-hover-effect group px-3 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) hover:text-[var(--accent-primary)]',
                         hasCustomBackground ? '' : 'opacity-60 cursor-not-allowed'
                       )}
                     >
@@ -837,7 +837,7 @@ export default function SettingsPage() {
                     {customGradientColors.length < 4 && (
                       <button
                         onClick={handleAddGradientColor}
-                        className="sidebar-hover-effect group h-12 px-4 rounded-xl border border-dashed border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-sm text-(--foreground-soft) flex items-center gap-2 group-hover:text-[var(--accent-primary)]"
+                        className="sidebar-hover-effect group h-12 px-4 rounded-xl border border-dashed border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-sm text-(--foreground-soft) flex items-center gap-2 hover:text-[var(--accent-primary)]"
                       >
                         <PlusIcon className="w-4 h-4" />
                         Add color
@@ -882,7 +882,7 @@ export default function SettingsPage() {
                         setCustomGradientColors(['#1a1a2e', '#16213e']);
                         setCustomGradientAngle(135);
                       }}
-                      className="sidebar-hover-effect group px-4 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) group-hover:text-[var(--accent-primary)]"
+                      className="sidebar-hover-effect group px-4 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) hover:text-[var(--accent-primary)]"
                     >
                       Reset gradient editor
                     </button>
@@ -899,7 +899,7 @@ export default function SettingsPage() {
                     />
                     <button
                       onClick={handleSaveCustomGradientPreset}
-                      className="sidebar-hover-effect group px-4 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) group-hover:text-[var(--accent-primary)]"
+                      className="sidebar-hover-effect group px-4 py-2 rounded-lg text-sm border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] text-(--foreground-soft) hover:text-[var(--accent-primary)]"
                     >
                       Save gradient
                     </button>
@@ -1071,7 +1071,7 @@ export default function SettingsPage() {
                 <div className="flex flex-wrap items-center gap-4">
                   <button
                     onClick={() => wallpaperInputRef.current?.click()}
-                    className="sidebar-hover-effect group px-4 py-2.5 rounded-xl border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) group-hover:text-[var(--accent-primary)]"
+                    className="sidebar-hover-effect group px-4 py-2.5 rounded-xl border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) hover:text-[var(--accent-primary)]"
                     disabled={wallpaperUploading}
                   >
                     <PhotoIcon className="w-5 h-5" />
@@ -1082,7 +1082,7 @@ export default function SettingsPage() {
                     onClick={handleResetBackground}
                     disabled={!hasCustomBackground || wallpaperUploading}
                     className={cn(
-                      'sidebar-hover-effect group px-4 py-2.5 rounded-xl border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) group-hover:text-[var(--accent-primary)]',
+                      'sidebar-hover-effect group px-4 py-2.5 rounded-xl border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) hover:text-[var(--accent-primary)]',
                       hasCustomBackground ? '' : 'opacity-60 cursor-not-allowed'
                     )}
                   >
@@ -1461,7 +1461,7 @@ export default function SettingsPage() {
                 </div>
                 <button
                   onClick={() => setIsCreatingPreset((v) => !v)}
-                  className="sidebar-hover-effect group px-3 py-2 text-sm rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) group-hover:text-[var(--accent-primary)]"
+                  className="sidebar-hover-effect group px-3 py-2 text-sm rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] bg-[color-mix(in_srgb,var(--background)_90%,transparent)] transition-all flex items-center gap-2 text-(--foreground-soft) hover:text-[var(--accent-primary)]"
                 >
                   <PlusIcon className="w-4 h-4" />
                   {isCreatingPreset ? 'Close' : 'Save current as preset'}

@@ -220,6 +220,7 @@ body::before {
 
 .sidebar-hover-effect {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
   transition: transform 0.3s ease-out, border-color 0.3s ease-out, background-color 0.3s ease-out, color 0.3s ease-out;
 }
@@ -227,6 +228,7 @@ body::before {
 .sidebar-hover-effect::before {
   content: '';
   position: absolute;
+  z-index: -1;
   inset: 0;
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -246,6 +248,7 @@ body::before {
 .sidebar-hover-effect::after {
   content: '';
   position: absolute;
+  z-index: -1;
   inset: 1.5px;
   border-radius: inherit;
   opacity: 0;
@@ -260,10 +263,12 @@ body::before {
 
 .sidebar-hover-effect:hover::after {
   opacity: 1;
+  background: color-mix(in srgb, var(--background-muted) 80%, transparent);
 }
 
 .sidebar-hover-effect:hover {
   transform: scale(1.03);
+  color: var(--accent-primary) !important;
 }
 
 .sidebar-hover-effect:active {
