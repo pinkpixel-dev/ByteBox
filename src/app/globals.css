@@ -173,18 +173,7 @@ body::before {
   z-index: -2;
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at 20% 20%, var(--glass-tint), transparent 55%),
-    radial-gradient(circle at 80% 0%, rgba(76, 201, 240, 0.12), transparent 60%);
-  mix-blend-mode: screen;
-  opacity: 0.6;
-  z-index: -1;
-  transition: opacity 200ms ease;
-}
+
 
 .glass {
   background: color-mix(in srgb, var(--glass-bg) 75%, transparent);
@@ -197,17 +186,7 @@ body::after {
   isolation: isolate;
 }
 
-.glass::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: linear-gradient(145deg, transparent 0%, var(--glass-tint) 100%);
-  mix-blend-mode: screen;
-  opacity: 0.45;
-  z-index: -1;
-}
+
 
 .glass--dense {
   background: color-mix(in srgb, var(--glass-bg) 86%, transparent);
