@@ -11,9 +11,9 @@ Download a pre-built native installer and run ByteBox as a native application â€
 
 | Platform                   | Download                                                                                               |
 | -------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Windows (.exe)             | [ByteBox.Setup.2.5.1.exe](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox.Setup.2.5.1.exe) |
-| Linux AppImage             | [ByteBox-2.5.1.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.1.AppImage)   |
-| Linux .deb (Debian/Ubuntu) | [bytebox_2.5.1_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.1_amd64.deb) |
+| Windows (.exe)             | [ByteBox.Setup.2.5.2.exe](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox.Setup.2.5.2.exe) |
+| Linux AppImage             | [ByteBox-2.5.2.AppImage](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/ByteBox-2.5.2.AppImage)   |
+| Linux .deb (Debian/Ubuntu) | [bytebox_2.5.2_amd64.deb](https://pub-52c1c4beebd34721b63e30b05b1b04de.r2.dev/bytebox_2.5.2_amd64.deb) |
 
 **Linux AppImage:**
 
