@@ -1,4 +1,6 @@
-![ByteBox Logo](./public/icon.png)
+<p align="center">
+  <img src="./public/icon.png" alt="ByteBox Logo" width="300" height="300" />
+</p>
 
 > A **lightweight web dashboard** for developer resources — your personal dev toolkit in one beautiful place.
 

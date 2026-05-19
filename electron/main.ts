@@ -181,7 +181,7 @@ function createWindow(): void {
     show: false,
     backgroundColor: "#0a0a0f", // matches ByteBox dark theme background
     title: "ByteBox",
-    icon: path.join(app.getAppPath(), "electron", "assets", "icons", "512x512.png"),
+    icon: path.join(app.getAppPath(), "public", "icon.png"),
     autoHideMenuBar: true,
     // On macOS, use the inset traffic-light style
     titleBarStyle: process.platform === "darwin" ? "hiddenInset" : "default",

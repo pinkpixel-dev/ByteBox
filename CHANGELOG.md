@@ -15,6 +15,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Star Button Refinement** — Removed the star count badge from the header's star button and adjusted its size to match the filter button (`w-[22px] h-[22px]`) for a cleaner header layout.
 - **Board Scrolling Behavior** — Adjusted `AppLayout` to prevent the entire page from scrolling when viewing the board. The horizontal category scrollbar is now always visible at the bottom of the viewport, eliminating the need to scroll vertically to reach it.
+- **Unified Brand Iconography** — Completely removed the legacy `logo_banner.png` asset in favor of `icon.png`. The dashboard expanded sidebar, documentation site, open graph images, and hero section now all consistently use the new `icon.png`.
+- **Sidebar Header Typography** — Added the "ByteBox" text directly into the expanded sidebar and styled it with `Space Grotesk` to match the official documentation site perfectly.
+- **Desktop Application Icons** — Regenerated all Electron application icons from the new `icon.png` asset, ensuring clear presentation on Linux, macOS, and Windows.
+
+#### Security & Dependencies
+
+- **Patched Vulnerabilities** — Resolved 14 npm security vulnerabilities via `package.json` overrides, including deep updates for `lodash`, `postcss`, and `@hono/node-server` without triggering destructive breaking changes to Next.js or Prisma.
+
+#### Fixed
+
+- **Electron Build Issue** — Fixed a critical Linux build error caused by a stray `package-lock.json` file in the home directory that broke Next.js Turbopack path inference, resulting in out-of-bounds symlinks for `better-sqlite3`.
+- **Reduced Bundle Size** — Reduced `.deb` package output from ~460MB to ~256MB.
 
 ---
 
