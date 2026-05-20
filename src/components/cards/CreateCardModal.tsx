@@ -6,8 +6,9 @@
 'use client';
 
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
-import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
-import { XMarkIcon, PhotoIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild, Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
+import { XMarkIcon, PhotoIcon, CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { createPortal } from 'react-dom';
 import { cn } from '@/lib/utils';
 import { processImage, validateImageFile } from '@/lib/utils/imageUtils';
 import { processDocFile, validateDocFile, formatFileSize, getFileIcon } from '@/lib/utils/fileUtils';
@@ -20,6 +21,109 @@ interface CreateCardModalProps {
   categories: Array<{ id: string; name: string }>;
   allTags: Array<{ id: string; name: string; color: string }>;
   preselectedCategoryId?: string;
+}
+
+interface DropdownSelectProps {
+  id: string;
+  value: string;
+  onChange: (val: string) => void;
+  options: { id: string; name: string }[];
+}
+
+function DropdownSelect({ id, value, onChange, options }: DropdownSelectProps) {
+  const selectedOption = options.find((o) => o.id === value) || options[0];
+
+  return (
+    <Listbox value={value} onChange={onChange}>
+      {({ open }) => (
+        <>
+          <ListboxButton
+            data-select-id={id}
+            className={cn(
+              "flex w-full items-center justify-between gap-2 px-3 py-2 rounded-xl text-sm font-medium",
+              "transition-all duration-200 border",
+              "surface-card surface-card--subtle hover:border-[color-mix(in_srgb,var(--accent-border)_40%,transparent)] bg-[rgba(5,6,11,0.9)] text-(--text-strong)"
+            )}
+          >
+            <span className="truncate">{selectedOption?.name || 'Select option'}</span>
+            <ChevronDownIcon className="w-4 h-4 opacity-60 shrink-0" />
+          </ListboxButton>
+
+          {globalThis.window !== undefined && open && createPortal(
+            <Transition
+              show={open}
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <ListboxOptions
+                static
+                className="fixed rounded-2xl focus:outline-none z-9999 overflow-hidden shadow-[0_26px_70px_rgba(0,0,0,0.75)]"
+                style={{
+                  top: `${(document.querySelector(`[data-select-id="${id}"]`) as HTMLElement)?.getBoundingClientRect().bottom + 8 || 0}px`,
+                  left: `${(document.querySelector(`[data-select-id="${id}"]`) as HTMLElement)?.getBoundingClientRect().left || 0}px`,
+                  width: `${(document.querySelector(`[data-select-id="${id}"]`) as HTMLElement)?.getBoundingClientRect().width || 256}px`,
+                  backgroundColor: 'color-mix(in srgb, var(--background-muted) 50%, transparent)',
+                  backdropFilter: 'blur(24px)',
+                  WebkitBackdropFilter: 'blur(24px)',
+                  border: '1px solid color-mix(in srgb, var(--glass-border) 10%, transparent)',
+                  maxHeight: '250px',
+                  overflowY: 'auto'
+                }}
+              >
+                <div className="p-2 relative flex flex-col gap-0.5" style={{ color: '#f8fafc' }}>
+                  {options.map((option) => (
+                    <ListboxOption key={option.id} value={option.id}>
+                      {({ focus, selected }) => (
+                        <div
+                          className={cn(
+                            "group relative w-full flex items-center gap-3 px-3 py-2.5 rounded-[20px] text-left transition-all duration-300 ease-out overflow-hidden cursor-pointer",
+                            "bg-[color-mix(in_srgb,var(--background)_90%,transparent)]",
+                            selected && "border border-transparent",
+                            !selected && focus && "scale-[1.02]"
+                          )}
+                        >
+                          {(selected || focus) && (
+                            <>
+                              <div className="absolute inset-0 opacity-70 transition-opacity duration-500 backdrop-blur-md">
+                                <div
+                                  className="absolute inset-0 mix-blend-screen transition-opacity duration-300"
+                                  style={{
+                                    backgroundImage: `repeating-linear-gradient(125deg, transparent 0%, transparent 15%, color-mix(in srgb, var(--accent-primary) 25%, transparent) 25%, transparent 35%, transparent 50%)`,
+                                    backgroundSize: '200%',
+                                  }}
+                                />
+                              </div>
+                              <div className="absolute inset-[1.5px] rounded-[18.5px] bg-[color-mix(in_srgb,var(--background-muted)_95%,transparent)] transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--background-muted)_80%,transparent)] pointer-events-none" />
+                            </>
+                          )}
+                          <div className="relative flex-1 min-w-0">
+                            <p
+                              className="text-sm font-medium transition-colors duration-300"
+                              style={{
+                                color: selected ? 'var(--accent-primary)' : '#f8fafc',
+                              }}
+                            >
+                              {option.name}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </ListboxOption>
+                  ))}
+                </div>
+              </ListboxOptions>
+            </Transition>,
+            document.body
+          )}
+        </>
+      )}
+    </Listbox>
+  );
 }
 
 export default function CreateCardModal({
@@ -337,38 +441,28 @@ export default function CreateCardModal({
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="card-type" className="block text-xs font-medium mb-1">Type</label>
-                      <select
+                      <DropdownSelect
                         id="card-type"
                         value={type}
-                        onChange={(e) => {
-                          const next = e.target.value as typeof type;
+                        onChange={(val) => {
+                          const next = val as typeof type;
                           setType(next);
                           setContent('');
                           resetFileState();
                         }}
-                        className="w-full rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 bg-[color-mix(in_srgb,var(--surface-card)_90%,transparent)] text-(--text-strong) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] [&>option]:bg-(--surface-card) [&>option]:text-(--text-strong)"
-                      >
-                        {['bookmark', 'snippet', 'command', 'doc', 'image', 'note'].map((t) => (
-                          <option key={t} value={t}>
-                            {t}
-                          </option>
-                        ))}
-                      </select>
+                        options={['bookmark', 'snippet', 'command', 'doc', 'image', 'note'].map(t => ({ id: t, name: t.charAt(0).toUpperCase() + t.slice(1) }))}
+                      />
                     </div>
                     <div>
                       <div className="flex items-center justify-between mb-1">
                         <label htmlFor="card-category" className="text-xs font-medium">Category</label>
                       </div>
-                      <select
+                      <DropdownSelect
                         id="card-category"
                         value={categoryId}
-                        onChange={(e) => setCategoryId(e.target.value)}
-                        className="w-full rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 bg-[color-mix(in_srgb,var(--surface-card)_90%,transparent)] text-(--text-strong) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] [&>option]:bg-(--surface-card) [&>option]:text-(--text-strong)"
-                      >
-                        {categories.map((c) => (
-                          <option key={c.id} value={c.id}>{c.name}</option>
-                        ))}
-                      </select>
+                        onChange={setCategoryId}
+                        options={categories}
+                      />
                     </div>
                   </div>
 
@@ -397,16 +491,12 @@ export default function CreateCardModal({
                   {(type === 'snippet' || type === 'command') && (
                     <div>
                       <label htmlFor="card-language" className="block text-xs font-medium mb-1">Language</label>
-                      <select
+                      <DropdownSelect
                         id="card-language"
                         value={language}
-                        onChange={(e) => setLanguage(e.target.value)}
-                        className="w-full rounded-lg border border-[color-mix(in_srgb,var(--card-border)_80%,transparent)] px-3 py-2 bg-[color-mix(in_srgb,var(--surface-card)_90%,transparent)] text-(--text-strong) focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent-primary)_50%,transparent)] [&>option]:bg-(--surface-card) [&>option]:text-(--text-strong)"
-                      >
-                        {LANGUAGE_OPTIONS.map((lang) => (
-                          <option key={lang.value} value={lang.value}>{lang.label}</option>
-                        ))}
-                      </select>
+                        onChange={setLanguage}
+                        options={LANGUAGE_OPTIONS.map(lang => ({ id: lang.value, name: lang.label }))}
+                      />
                     </div>
                   )}
 
