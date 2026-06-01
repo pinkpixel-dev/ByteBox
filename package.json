@@ -80,7 +80,7 @@
     "node-gyp": "^12.3.0",
     "prisma": "^7.4.2",
     "tailwindcss": "^4",
-    "tsx": "^4.21.0",
+    "tsx": "^4.22.4",
     "typescript": "^5.9.3",
     "wait-on": "^9.0.4"
   }
