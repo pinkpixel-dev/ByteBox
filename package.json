@@ -50,7 +50,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@headlessui/react": "^2.2.9",
     "@heroicons/react": "^2.2.0",
-    "@prisma/adapter-better-sqlite3": "^7.4.2",
+    "@prisma/adapter-better-sqlite3": "^7.8.0",
     "@prisma/client": "^7.4.2",
     "babel-plugin-react-compiler": "^1.0.0",
     "better-sqlite3": "^12.6.2",
